@@ -1,0 +1,55 @@
+{
+  "name": "webstat",
+  "private": true,
+  "scripts": {
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.20.0",
+    "fibers": "^2.0.0",
+    "meteor-node-stubs": "~0.2.0",
+    "react": "^15.4.1",
+    "react-addons-create-fragment": "^15.4.1",
+    "react-addons-css-transition-group": "^15.4.1",
+    "react-addons-linked-state-mixin": "^15.4.1",
+    "react-addons-perf": "^15.4.1",
+    "react-addons-pure-render-mixin": "^15.4.1",
+    "react-addons-test-utils": "^15.4.1",
+    "react-addons-transition-group": "^15.4.1",
+    "react-addons-update": "^15.4.1",
+    "react-dom": "^15.4.1",
+    "react-mounter": "^1.2.0"
+  },
+  "xo": {
+    "esnext": true,
+    "envs": [
+      "meteor",
+      "browser"
+    ],
+    "space": 2,
+    "rules": {
+      "max-len": [
+        "error",
+        80,
+        2
+      ],
+      "import/no-unresolved": [
+        "error",
+        {
+          "ignore": [
+            "^meteor/",
+            "^/"
+          ]
+        }
+      ],
+      "import/no-extraneous-dependencies": [
+        0,
+        {
+          "ignore": [
+            "meteor"
+          ]
+        }
+      ]
+    }
+  }
+}
