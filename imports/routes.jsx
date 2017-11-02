@@ -1,5 +1,5 @@
 import {FlowRouter} from 'meteor/bensventures:flow-router-ssr';
-import {React} from 'react';
+import React from 'react';
 import {mount} from 'react-mounter';
 import AppLayout from './ui/layouts/app_layout';
 

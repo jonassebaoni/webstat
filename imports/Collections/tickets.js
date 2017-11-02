@@ -9,8 +9,5 @@ Meteor.methods({
        console.log(Tickets.find().fetch());
    }
 });
-/*
-Meteor.call('insertData');
-Meteor.call('insertData', (err, res) => {
-    console.log(res);
-});*/
+
+export default Tickets;

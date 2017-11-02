@@ -1,36 +1,41 @@
-/**
- * Created by alexis_moreau on 05/01/2017.
- */
 import React from 'react';
-import {createContainer} from 'meteor/react-meteor-data';
+import {withTracker} from 'meteor/react-meteor-data';
 import Tickets from '../../Collections/tickets';
 
 class WebStat extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
-    render() {
-        console.log(this.props.id);
-        if (!this.props.ready) {
-            return (
-                <div>chargement</div>
-            )
-        }
-        return (
-            <div>
-                <h1>Statistics</h1>
-                <h2>{this.props.ticket._id}</h2>
-            </div>
-        );
+  render() {
+    if (!this.props.ready) {
+      return (
+        <div>chargement</div>
+      )
     }
+    if (!this.props.ticket) { // si pas de ticket dans la base
+      return (
+        <div>pas de ticket disponible</div>
+      )
+    }
+    return ( // on affiche le ticket
+      <div>
+        <h1>Statistics</h1>
+        <h2>{this.props.ticket._id}</h2>
+        <h2>{this.props.ticket.number}</h2>
+        <h2>{this.props.ticket.passingTime}</h2>
+        <h2>{this.props.ticket.passed}</h2>
+        <h2>{this.props.ticket.createdAt}</h2>
+      </div>
+    );
+  }
 }
 
-export default createContainer(({id}) => {
-    const handle = Meteor.subscribe('tickets');
-    return {
-        ready: handle.ready(),
-        ticket: Tickets.findOne(id)
-    }
-}, WebStat);
+export default withTracker(({id}) => {
+  const handle = Meteor.subscribe('tickets');
+  return {
+    ready: handle.ready(),
+    ticket: Tickets.findOne(id) // query
+  }
+})(WebStat);
