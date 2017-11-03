@@ -10,7 +10,7 @@ exposed.route('/', {
     action() {
         import('./ui/components/webstat').then(({default: WebStat}) => {
             mount(AppLayout, {
-                content: <WebStat text='index'/>
+                content: <WebStat id='67774jtYxTLwAQ2bj'/>
             })
         })
     }
@@ -21,7 +21,7 @@ exposed.route('/ticket', {
     action() {
         import('./ui/components/webstat').then(({default: WebStat}) => {
             mount(AppLayout, {
-                content: <WebStat id='fd'/>
+                content: <WebStat id='67774jtYxTLwAQ2bj'/>
             })
         })
     }
