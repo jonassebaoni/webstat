@@ -58,8 +58,9 @@ SyncedCron.add({
     job: function() {
         Meteor.call('cron_insertData');
     }
-},
-    {
+});
+
+SyncedCron.add({
         name: 'Import data into JSON file from remote database',
         schedule: function (parser) {
             return parser.text('every 15 minutes');
@@ -67,5 +68,4 @@ SyncedCron.add({
         job: function () {
             Meteor.call('cron_retrieveData');
         }
-    }
-);
+});

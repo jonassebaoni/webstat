@@ -6,6 +6,7 @@ const Tickets = new Mongo.Collection('tickets');
 Meteor.methods({
    insertData() {
      Tickets.insert({
+       _id : "67774jtYxTLwAQ2bj",
        number : 1,
        idPerson : "",
        idCompany : "7SrAcFawQk6MqhsWQ",
