@@ -10,7 +10,7 @@ exposed.route('/', {
     action() {
         import('./ui/components/webstat').then(({default: WebStat}) => {
             mount(AppLayout, {
-                content: <WebStat id='67774jtYxTLwAQ2bj'/>
+                content: <WebStat />
             })
         })
     }

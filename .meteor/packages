@@ -24,3 +24,5 @@ react-meteor-data
 dynamic-import@0.2.0
 percolate:synced-cron
 bensventures:flow-router-ssr
+meteorhacks:aggregate
+jcbernack:reactive-aggregate

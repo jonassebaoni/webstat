@@ -18,10 +18,10 @@ Meteor.startup(() => {
             // to queue other method calls (see Meteor docs)
             this.unblock();
             var future=new Future();
-            var command="ssh esme@137.74.175.30 \"mongo meteor --norc --quiet --eval 'db.tickets.find().forEach(printjson)'\" >>" + appData + "data.json";
+            var command="ssh esme@137.74.175.30 \"mongo meteor --norc --quiet --eval 'db.tickets.find().forEach(printjson)'\" >" + appData + "data.json";
             exec(command,function(error,stdout,stderr){
                 if(error){
-                    console.log(error);
+                    console.log("connection to database failed");
                     throw new Meteor.Error(500,command+" failed");
                 }
                 future.return(stdout.toString());
@@ -37,7 +37,7 @@ Meteor.startup(() => {
             var command="mongoimport -h localhost:3001 --db meteor --collection tickets --type json --file " + appData + "data.json";
             exec(command,function(error,stdout,stderr){
                 if(error){
-                    console.log(error);
+                    console.log("Importing data failed");
                     throw new Meteor.Error(500,command+" failed");
                 }
                 future.return(stdout.toString());
@@ -47,7 +47,7 @@ Meteor.startup(() => {
     });
 
     // Start the Cron jobs
-    SyncedCron.start();
+    //SyncedCron.start();
 });
 
 SyncedCron.add({

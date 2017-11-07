@@ -6,3 +6,13 @@ Meteor.publish('tickets', () => {
     return Tickets.find({});
     //else return false
 });
+
+Meteor.publish("ticketsTotal", function () {
+    ReactiveAggregate(this, Tickets, [{
+        $group: {
+            _id: "$idCompany",
+            sum: {$sum: 1}
+        }
+
+    }],{ clientCollection: "ticketsAggregation" });
+});
