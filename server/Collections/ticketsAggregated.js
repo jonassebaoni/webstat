@@ -8,6 +8,8 @@ Meteor.publish("ticketsAggregated", function () {
       _id: "$idCompany",
       sum: {$sum: 1}
     }
-
-  }], {clientCollection: "ticketsAggregated"});
+  },
+    {
+      $limit: 100
+    }], {clientCollection: "ticketsAggregated"});
 });
