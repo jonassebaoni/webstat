@@ -18,6 +18,7 @@ export default class PickDate extends React.Component {
     };
 
     render() {
+      console.log(this.state.controlledDate);
         return (
             <DatePicker
                 hintText="Date Input"

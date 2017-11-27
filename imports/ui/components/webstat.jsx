@@ -9,7 +9,9 @@ const {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} = Recharts;
 class WebStat extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      date: null,
+    };
   }
 
   render() {
@@ -27,7 +29,9 @@ class WebStat extends React.Component {
       return (
           <div>
             <PickDate />
-              {console.log(PickDate.state.controlledDate);}
+
+            <Chart query={this.state.date} />
+
             <BarChart width={600} height={300} data={this.props.ticketsAggregated}
                       margin={{top: 5, right: 30, left: 20, bottom: 5}}>
               <XAxis dataKey="_id" tick={false} name="ID attraction" label="ID attraction" />
@@ -42,7 +46,8 @@ class WebStat extends React.Component {
   }
 }
 
-export default withTracker(() => {
+export default withTracker(({query}) => {
+  console.log(query);
   const handle = Meteor.subscribe('ticketsAggregated');
   return {
     ready: handle.ready(),
