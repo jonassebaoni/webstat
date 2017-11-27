@@ -2,7 +2,7 @@ import React from 'react';
 import WebStat from '../../../imports/ui/components/webstat';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Grid, Row, Col } from 'react-flexbox-grid';
-import PickDate from "../components/pickdate";
+
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -11,32 +11,32 @@ class HomePage extends React.Component {
 
   render() {
     return (
-        <MuiThemeProvider>
-          <div className="layout">
-                  <Grid fluid>
-                      <Row>
+      <MuiThemeProvider>
+        <div className="layout">
+          <Grid fluid>
+            <Row>
+              <Col xs>
+                <h1> total number of tickets per attraction </h1>
+                <WebStat/>
+              </Col>
+              {/*<Col xs>
+                              <h1>Graphic 2</h1>
+                              <WebStat/>
+                          </Col>*/}
+            </Row>
+            {/*<Row>
                           <Col xs>
-                              <h2> total number of tickets per attraction </h2>
+                              <h1>Graphic 3</h1>
                               <WebStat/>
                           </Col>
                           <Col xs>
-                              <h2>Graphic 2</h2>
+                              <h1>Graphic 4</h1>
                               <WebStat/>
                           </Col>
-                      </Row>
-                      <Row>
-                          <Col xs>
-                              <h2>Graphic 3</h2>
-                              <WebStat/>
-                          </Col>
-                          <Col xs>
-                              <h2>Graphic 4</h2>
-                              <WebStat/>
-                          </Col>
-                      </Row>
-                  </Grid>
-          </div>
-        </MuiThemeProvider>
+                      </Row>*/}
+          </Grid>
+        </div>
+      </MuiThemeProvider>
     );
   }
 }
