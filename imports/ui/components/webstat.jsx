@@ -1,9 +1,8 @@
 import React from 'react';
 import {withTracker} from 'meteor/react-meteor-data';
 import TicketsAggregated from '../../../imports/Collections/ticketsAggregated';
-import Recharts from "recharts"
-import Slider from 'material-ui/Slider';
-import PickTime from './picktime';
+import Recharts from "recharts";
+import PickDate from './pickdate';
 
 const {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} = Recharts;
 
@@ -27,7 +26,8 @@ class WebStat extends React.Component {
     else {
       return (
           <div>
-            <PickTime />
+            <PickDate />
+              {console.log(PickDate.state.controlledDate);}
             <BarChart width={600} height={300} data={this.props.ticketsAggregated}
                       margin={{top: 5, right: 30, left: 20, bottom: 5}}>
               <XAxis dataKey="_id" tick={false} name="ID attraction" label="ID attraction" />
