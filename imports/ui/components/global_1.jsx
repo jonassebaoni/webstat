@@ -2,7 +2,8 @@ import React from 'react';
 import {withTracker} from 'meteor/react-meteor-data';
 import TicketsAggregated from '../../../imports/Collections/ticketsAggregated';
 import Recharts from "recharts";
-import Dropdown from "../components/dropdown";
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
 
 const {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} = Recharts;
 
@@ -10,6 +11,7 @@ class Global1 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      selectedOptions: '',
     };
   }
 
@@ -17,10 +19,16 @@ class Global1 extends React.Component {
       let i;
       let a = [];
       for(i=0; i<opt.length; i++){
-          a.push({value: opt[i]["_id"], label: opt[i]["_id"]});
+          a.push({value: i, label: opt[i]["_id"]});
       }
       return a;
   }
+
+    handleChange(selectedOption) {
+        this.setState({ selectedOption });
+        console.log(`id selected: ${selectedOption.label}`);
+        console.log(`value: ${selectedOption.value}`);
+    }
 
 
   render() {
@@ -37,7 +45,13 @@ class Global1 extends React.Component {
     else {
       return (
           <div>
-            <Dropdown options={this.loadOptions(this.props.ticketsAggregated)} />
+              <Select
+                  name="id selected"
+                  value={this.state.selectedOption}
+                  onChange={this.handleChange.bind(this)}
+                  options= {this.loadOptions(this.props.ticketsAggregated)}
+              />
+
             <BarChart width={600} height={300} data={this.props.ticketsAggregated}
                       margin={{top: 5, right: 30, left: 20, bottom: 5}}>
               <XAxis dataKey="_id" tick={false} name="ID attraction" label="ID attraction" />

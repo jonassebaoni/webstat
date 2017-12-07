@@ -3,6 +3,7 @@ import Global1 from '../components/global_1';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 
+
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
