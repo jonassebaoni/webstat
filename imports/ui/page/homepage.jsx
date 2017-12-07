@@ -1,41 +1,29 @@
 import React from 'react';
-import Global1 from '../components/global_1';
-import Global2 from '../components/global_2';
+import Graph1 from '../components/graph-1.jsx';
+//import Graph2 from '../components/graph-2.jsx';
+import {withTracker} from 'meteor/react-meteor-data';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Grid, Row, Col } from 'react-flexbox-grid';
-
+import Companies from "../../Collections/companies";
 
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      query: ''
     }
   }
-  handleChange(selectedOption) {
-    this.setState({ query: selectedOption });
-    console.log(`id selected: ${selectedOption.label}`);
-    console.log(`value: ${selectedOption.value}`);
-  }
   render() {
+    if(!this.props.ready) {
+      return <div>chargement</div>
+    }
     return (
       <MuiThemeProvider>
         <div className="layout">
           <Grid fluid>
             <Row>
               <Col xs>
-                <h1> total number of tickets per attraction </h1>
-                <Global1/>
-              </Col>
-              <Col xs>
-                  <h1> Graph 2 </h1>
-                <Select
-                  name="id selected"
-                  value={this.state.query}
-                  onChange={this.handleChange.bind(this)}
-                  options= {this.loadOptions(this.props.tickets)}
-                />
-                  <Global2 query={this.state.query}/>
+                <h1> Graph 1 </h1>
+                <Graph1 options={this.props.companies}/>
               </Col>
             </Row>
             {/*<Row>
@@ -55,4 +43,10 @@ class HomePage extends React.Component {
   }
 }
 
-export default HomePage;
+export default withTracker(() => {
+  const handle = Meteor.subscribe('companies');
+  return {
+    ready: handle.ready(),
+    companies: Companies.find().fetch(),
+  };
+})(HomePage);
