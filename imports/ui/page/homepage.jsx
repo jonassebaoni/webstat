@@ -1,8 +1,7 @@
 import React from 'react';
-import WebStat from '../../../imports/ui/components/webstat';
+import Global1 from '../components/global_1';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Grid, Row, Col } from 'react-flexbox-grid';
-
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -17,12 +16,11 @@ class HomePage extends React.Component {
             <Row>
               <Col xs>
                 <h1> total number of tickets per attraction </h1>
-                <WebStat/>
+                <Global1/>
               </Col>
-              {/*<Col xs>
+              <Col xs>
                               <h1>Graphic 2</h1>
-                              <WebStat/>
-                          </Col>*/}
+                          </Col>
             </Row>
             {/*<Row>
                           <Col xs>

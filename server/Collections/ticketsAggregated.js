@@ -18,9 +18,3 @@ Meteor.publish("ticketsAggregated", function () {
         $limit: 15
       }], {clientCollection: "ticketsAggregated"});
 });
-
-Meteor.methods({
-    returnData() {
-      return Tickets.find().count();
-    }
-})

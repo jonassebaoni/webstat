@@ -2,17 +2,26 @@ import React from 'react';
 import {withTracker} from 'meteor/react-meteor-data';
 import TicketsAggregated from '../../../imports/Collections/ticketsAggregated';
 import Recharts from "recharts";
-import PickDate from './pickdate';
+import Dropdown from "../components/dropdown";
 
 const {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} = Recharts;
 
-class WebStat extends React.Component {
+class Global1 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      date: null,
     };
   }
+
+  loadOptions(opt)  {
+      let i;
+      let a = [];
+      for(i=0; i<opt.length; i++){
+          a.push({value: opt[i]["_id"], label: opt[i]["_id"]});
+      }
+      return a;
+  }
+
 
   render() {
     if (!this.props.ready) {
@@ -28,10 +37,7 @@ class WebStat extends React.Component {
     else {
       return (
           <div>
-            <PickDate />
-
-            <Chart query={this.state.date} />
-
+            <Dropdown options={this.loadOptions(this.props.ticketsAggregated)} />
             <BarChart width={600} height={300} data={this.props.ticketsAggregated}
                       margin={{top: 5, right: 30, left: 20, bottom: 5}}>
               <XAxis dataKey="_id" tick={false} name="ID attraction" label="ID attraction" />
@@ -45,12 +51,10 @@ class WebStat extends React.Component {
     }
   }
 }
-
-export default withTracker(({query}) => {
-  console.log(query);
-  const handle = Meteor.subscribe('ticketsAggregated');
-  return {
-    ready: handle.ready(),
-    ticketsAggregated: TicketsAggregated.find().fetch(),
-  };
-})(WebStat);
+export default withTracker(() => {
+    const handle = Meteor.subscribe('ticketsAggregated');
+    return {
+        ready: handle.ready(),
+        ticketsAggregated: TicketsAggregated.find().fetch(),
+    };
+})(Global1);
