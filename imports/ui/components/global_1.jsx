@@ -16,6 +16,7 @@ class Global1 extends React.Component {
   }
 
   loadOptions(opt)  {
+    console.log(this.props.ticketsAggregated);
       let i;
       let a = [];
       for(i=0; i<opt.length; i++){
