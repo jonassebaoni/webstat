@@ -1,5 +1,6 @@
 import React from 'react';
 import Global1 from '../components/global_1';
+import Global2 from '../components/global_2';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 
@@ -7,6 +8,9 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      query: 'write a query'
+    }
   }
 
   render() {
@@ -20,8 +24,9 @@ class HomePage extends React.Component {
                 <Global1/>
               </Col>
               <Col xs>
-                              <h1>Graphic 2</h1>
-                          </Col>
+                  <h1> Graph 2 </h1>
+                  <Global2 query={this.state.query}/>
+              </Col>
             </Row>
             {/*<Row>
                           <Col xs>

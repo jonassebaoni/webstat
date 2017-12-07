@@ -1,6 +1,6 @@
 import React from 'react';
 import {withTracker} from 'meteor/react-meteor-data';
-import TicketsAggregated from '../../../imports/Collections/ticketsAggregated';
+import {TicketsAggregated, YearAggregated} from '../../../imports/Collections/ticketsAggregated';
 import Recharts from "recharts";
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
@@ -11,7 +11,7 @@ class Global1 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedOptions: '',
+      selectedOption: null  ,
     };
   }
 
@@ -42,6 +42,7 @@ class Global1 extends React.Component {
         <div>pas de ticket disponible</div>
       )
     }
+
     else {
       return (
           <div>
@@ -51,7 +52,6 @@ class Global1 extends React.Component {
                   onChange={this.handleChange.bind(this)}
                   options= {this.loadOptions(this.props.ticketsAggregated)}
               />
-
             <BarChart width={600} height={300} data={this.props.ticketsAggregated}
                       margin={{top: 5, right: 30, left: 20, bottom: 5}}>
               <XAxis dataKey="_id" tick={false} name="ID attraction" label="ID attraction" />
