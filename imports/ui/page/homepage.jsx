@@ -12,11 +12,7 @@ class HomePage extends React.Component {
       query: ''
     }
   }
-  handleChange(selectedOption) {
-    this.setState({ query: selectedOption });
-    console.log(`id selected: ${selectedOption.label}`);
-    console.log(`value: ${selectedOption.value}`);
-  }
+
   render() {
     return (
       <MuiThemeProvider>
@@ -29,12 +25,7 @@ class HomePage extends React.Component {
               </Col>
               <Col xs>
                   <h1> Graph 2 </h1>
-                <Select
-                  name="id selected"
-                  value={this.state.query}
-                  onChange={this.handleChange.bind(this)}
-                  options= {this.loadOptions(this.props.tickets)}
-                />
+
                   <Global2 query={this.state.query}/>
               </Col>
             </Row>

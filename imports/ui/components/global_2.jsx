@@ -5,16 +5,9 @@ import {YearAggregated} from '../../../imports/Collections/ticketsAggregated'
 import Recharts from "recharts";
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
+import {MonthAggregated} from "../../Collections/ticketsAggregated";
 
 const {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} = Recharts;
-
-const ids = [
-  { key: '1', value: 'show', text: i18n.__('attraction-fields', 'show') },
-  { key: '2', value: 'restaurant', text: i18n.__('attraction-fields', 'restaurant') },
-  { key: '3', value: 'thrill', text: i18n.__('attraction-fields', 'thrill') },
-  { key: '4', value: 'kids', text: i18n.__('attraction-fields', 'kids') },
-  { key: '5', value: 'family', text: i18n.__('attraction-fields', 'family') },
-];
 
 class Global2 extends React.Component {
     constructor(props) {
@@ -22,6 +15,16 @@ class Global2 extends React.Component {
       this.state = {
         selectedOption: ''
       }
+    }
+
+    loadOptions(opt)  {
+        console.log(this.props.ticketsAggregated);
+        let i;
+        let a = [];
+        for(i=0; i<opt.length; i++){
+            a.push({value: i, label: opt[i]["_id"]});
+        }
+        return a;
     }
 
 
@@ -46,26 +49,23 @@ class Global2 extends React.Component {
 
         else {
             return (
-              <div>
                 <Select
                   name="id selected"
                   value={this.state.selectedOption}
                   onChange={this.handleChange.bind(this)}
-                  options= {ids}
+                  options= {this.loadOptions(this.props.tickets)}
                 />
-                <Global2 query={this.state.query}/>
-              </div>
             );
         }
     }
 }
 export default withTracker(({query}) => {
     console.log(query);
-    console.log(YearAggregated.find({}).fetch())
-    const handle = Meteor.subscribe('ticketsYear');
+    console.log(MonthAggregated.find({}).fetch())
+    const handle = Meteor.subscribe('ticketsMonth');
     return {
         ready: handle.ready(),
-        tickets: YearAggregated.find({_id: query}).fetch(),
+        tickets: MonthAggregated.find({}, { sort: {_id : 1 } }).fetch(),
 
     };
 })(Global2);

@@ -34,3 +34,19 @@ Meteor.publish("ticketsYear", function () {
             $limit: 15
         }], {clientCollection: "yearAggregated"});
 });
+
+Meteor.publish("ticketsMonth", function () {
+    ReactiveAggregate(this, Tickets, [
+        {
+            $group: {
+                _id: {$month: "$passingTime"},
+                attraction: {$push: "idCompany"},
+            }
+        },
+        {
+            $sort: {sum : -1}
+        },
+        {
+            $limit: 15
+        }], {clientCollection: "monthAggregated"});
+});
