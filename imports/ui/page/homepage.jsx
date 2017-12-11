@@ -29,14 +29,15 @@ class HomePage extends React.Component {
               </Col>
                 <Col xs={4}>
                     <h1> Graph 2</h1>
-                    <Graph2 options={this.props.companies}/>
+                    <Graph2 />
                 </Col>
             </Row>
-            <Row>
-                <Col xs>
+            <Row around="xs">
+                <Col xs={4}>
                     <h1>Graphic 3</h1>
+                    <Graph3 options={this.props.companies}/>
                 </Col>
-                <Col xs>
+                <Col xs={4}>
                     <h1>Graphic 4</h1>
                 </Col>
             </Row>

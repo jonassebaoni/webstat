@@ -1,6 +1,6 @@
 import React from 'react';
 import {withTracker} from 'meteor/react-meteor-data';
-import {TicketsAggregated, YearAggregated} from '../../../imports/Collections/ticketsAggregated';
+import { TicketsAggregated } from '../../../imports/Collections/ticketsAggregated';
 import Recharts from "recharts";
 
 const {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} = Recharts;

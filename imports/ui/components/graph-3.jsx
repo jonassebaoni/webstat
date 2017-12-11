@@ -1,6 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
-import Chart1 from './chart3.jsx';
+import Chart3 from './chart3.jsx';
 
 class Graph3 extends React.Component {
     constructor(props) {
@@ -8,7 +8,6 @@ class Graph3 extends React.Component {
         this.state = {
             query: '',
             options: [],
-            year: '',
         };
         this.handleChange = this.handleChange.bind(this);
     }
@@ -21,7 +20,6 @@ class Graph3 extends React.Component {
         this.setState({
             options,
             query: options[0].value, // valeur par defaut
-            year: 2017, //valeur par défaut
         });
     }
 
@@ -34,25 +32,15 @@ class Graph3 extends React.Component {
     }
 
     render() {
-        const listYears = [
-            {value: 2017, label: 2017},
-            {value: 2018, label: 2018},
-        ];
         return (
             <div>
-                <Select
-                    name="year selected"
-                    value={this.state.year}
-                    onChange={this.handleChange}
-                    options={listYears}
-                />
                 <Select
                     name="id selected"
                     value={this.state.query}
                     onChange={this.handleChange}
                     options={this.state.options}
                 />
-                <Chart3 filter={this.state.query} year={this.state.year}/>
+                <Chart3 filter={this.state.query} yearSelected={this.state.year}/>
             </div>
         );
     }

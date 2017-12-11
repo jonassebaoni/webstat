@@ -21,7 +21,7 @@ Meteor.publish("ticketsAggregated", function () {
 });
 
 // Compute the number of tickets sold every month for a chosen date
-Meteor.publish("ticketsMonthly", function (yearSelected) {
+Meteor.publish("ticketsMonthly", function (yearSelected, companySelected) {
     ReactiveAggregate(this, Tickets, [
         {
             $project: {
@@ -50,7 +50,7 @@ Meteor.publish("ticketsMonthly", function (yearSelected) {
 });
 
 // Compute the number of tickets sold every week for a chosen date
-Meteor.publish("ticketsMonthly", function (yearSelected, monthSelected) {
+Meteor.publish("ticketsWeekly", function (yearSelected, monthSelected) {
     ReactiveAggregate(this, Tickets, [
         {
             $project: {
@@ -82,7 +82,7 @@ Meteor.publish("ticketsMonthly", function (yearSelected, monthSelected) {
 
 
 // Compute the number of tickets sold every day for a chosen date
-Meteor.publish("ticketsMonthly", function (yearSelected, monthSelected, weekSelected) {
+Meteor.publish("ticketsDaily", function (yearSelected, monthSelected, weekSelected) {
     ReactiveAggregate(this, Tickets, [
         {
             $project: {

@@ -1,6 +1,6 @@
 import React from 'react';
 import {withTracker} from 'meteor/react-meteor-data';
-import {TicketsAggregated, TicketsMonthly} from '../../../imports/Collections/ticketsAggregated';
+import { TicketsMonthly } from '../../../imports/Collections/ticketsAggregated';
 import Recharts from "recharts";
 
 const {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend} = Recharts;
@@ -32,7 +32,6 @@ class Chart1 extends React.Component {
     }
 }
 export default withTracker(({yearSelected}) => {
-    console.log("year selected " + yearSelected);
     const handle = Meteor.subscribe('ticketsMonthly', yearSelected);
     return {
         ready: handle.ready(),
