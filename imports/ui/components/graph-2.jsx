@@ -2,7 +2,7 @@ import React from 'react';
 import Select from 'react-select';
 import Chart2 from './chart2.jsx';
 
-class Graph1 extends React.Component {
+class Graph2 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -22,9 +22,7 @@ class Graph1 extends React.Component {
     render() {
         const listYears = [
             {value: 2017, label: 2017},
-            {value: 2018, label: 2018},
-            {value: 2019, label: 2019},
-            {value: 2020, label: 2020},
+            {value: 2018, label: 2018}
             ];
         return (
             <div>
@@ -39,4 +37,4 @@ class Graph1 extends React.Component {
         );
     }
 }
-export default Graph1;
+export default Graph2;

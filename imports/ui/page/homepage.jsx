@@ -22,12 +22,12 @@ class HomePage extends React.Component {
       <MuiThemeProvider>
         <div className="layout">
           <Grid fluid>
-            <Row>
-              <Col xs>
+            <Row around="xs">
+              <Col xs={4}>
                 <h1> Graph 1 </h1>
                 <Chart1 />
               </Col>
-                <Col xs>
+                <Col xs={4}>
                     <h1> Graph 2</h1>
                     <Graph2 options={this.props.companies}/>
                 </Col>
