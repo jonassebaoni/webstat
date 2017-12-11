@@ -1,7 +1,7 @@
 import {Meteor} from 'meteor/meteor';
 import {ReactiveAggregate} from 'meteor/jcbernack:reactive-aggregate';
 import Tickets from '../../imports/Collections/tickets';
-import {TicketsAggregated, YearAggregated} from "../../imports/Collections/ticketsAggregated";
+import {TicketsAggregated, TicketsMonthly} from "../../imports/Collections/ticketsAggregated";
 
 Meteor.publish("ticketsAggregated", function () {
   ReactiveAggregate(this, Tickets, [
@@ -19,18 +19,31 @@ Meteor.publish("ticketsAggregated", function () {
       }], {clientCollection: "ticketsAggregated"});
 });
 
-Meteor.publish("ticketsYear", function () {
+Meteor.publish("ticketsMonthly", function (yearSelected) {
     ReactiveAggregate(this, Tickets, [
         {
-            $group: {
-                _id: {$year: "$passingTime"},
-                attraction: {$push: "idCompany"},
+            $project: {
+                "year": {$year: "$passingTime"},
+                "month": {$month: "$passingTime"},
+
             }
         },
         {
-            $sort: {sum : -1}
+            $match: {
+                "year": yearSelected
+            }
+        },
+        {
+            $group: {
+                "_id": "$month",
+                "sum": {$sum: 1}
+            }
+        },
+        {
+            $sort: {"_id" : 1}
         },
         {
             $limit: 15
-        }], {clientCollection: "yearAggregated"});
+        }], {clientCollection: "ticketsMonthly"});
 });
+

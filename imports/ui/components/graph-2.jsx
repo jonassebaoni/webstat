@@ -1,71 +1,42 @@
 import React from 'react';
-import {withTracker} from 'meteor/react-meteor-data';
-import Tickets from '../../../imports/Collections/tickets';
-import {YearAggregated} from '../../../imports/Collections/ticketsAggregated'
-import Recharts from "recharts";
 import Select from 'react-select';
-import 'react-select/dist/react-select.css';
+import Chart2 from './chart2.jsx';
 
-const {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} = Recharts;
-
-const ids = [
-  { key: '1', value: 'show', text: i18n.__('attraction-fields', 'show') },
-  { key: '2', value: 'restaurant', text: i18n.__('attraction-fields', 'restaurant') },
-  { key: '3', value: 'thrill', text: i18n.__('attraction-fields', 'thrill') },
-  { key: '4', value: 'kids', text: i18n.__('attraction-fields', 'kids') },
-  { key: '5', value: 'family', text: i18n.__('attraction-fields', 'family') },
-];
-
-class Global2 extends React.Component {
+class Graph1 extends React.Component {
     constructor(props) {
         super(props);
-      this.state = {
-        selectedOption: ''
-      }
+        this.state = {
+            yearSelected: 2017,
+        };
+        this.handleChange = this.handleChange.bind(this);
     }
 
+    componentDidMount() {
+        require('react-select/dist/react-select.css');
+    }
 
     handleChange(selectedOption) {
-        this.setState({ selectedOption });
-        console.log(`id selected: ${selectedOption.label}`);
-        console.log(`value: ${selectedOption.value}`);
+        this.setState({ yearSelected: selectedOption.value });
     }
-
 
     render() {
-        if (!this.props.ready) {
-            return (
-                <div>chargement</div>
-            )
-        }
-        if (!this.props.tickets) { // si pas de ticket dans la base
-            return (
-                <div>pas de ticket disponible</div>
-            )
-        }
-
-        else {
-            return (
-              <div>
+        const listYears = [
+            {value: 2017, label: 2017},
+            {value: 2018, label: 2018},
+            {value: 2019, label: 2019},
+            {value: 2020, label: 2020},
+            ];
+        return (
+            <div>
                 <Select
-                  name="id selected"
-                  value={this.state.selectedOption}
-                  onChange={this.handleChange.bind(this)}
-                  options= {ids}
+                    name="year selected"
+                    value={this.state.year}
+                    onChange={this.handleChange}
+                    options={listYears}
                 />
-                <Global2 query={this.state.query}/>
-              </div>
-            );
-        }
+                <Chart2  yearSelected={this.state.yearSelected} />
+            </div>
+        );
     }
 }
-export default withTracker(({query}) => {
-    console.log(query);
-    console.log(YearAggregated.find({}).fetch())
-    const handle = Meteor.subscribe('ticketsYear');
-    return {
-        ready: handle.ready(),
-        tickets: YearAggregated.find({_id: query}).fetch(),
-
-    };
-})(Global2);
+export default Graph1;

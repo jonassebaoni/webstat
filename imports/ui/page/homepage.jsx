@@ -1,6 +1,7 @@
 import React from 'react';
-import Graph1 from '../components/graph-1.jsx';
-//import Graph2 from '../components/graph-2.jsx';
+import Chart1 from '../components/chart1.jsx';
+import Graph2 from '../components/graph-2.jsx';
+import Graph3 from '../components/graph-3.jsx';
 import {withTracker} from 'meteor/react-meteor-data';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Grid, Row, Col } from 'react-flexbox-grid';
@@ -13,6 +14,7 @@ class HomePage extends React.Component {
     }
   }
   render() {
+    console.log(this.props.companies);
     if(!this.props.ready) {
       return <div>chargement</div>
     }
@@ -23,19 +25,21 @@ class HomePage extends React.Component {
             <Row>
               <Col xs>
                 <h1> Graph 1 </h1>
-                <Graph1 options={this.props.companies}/>
+                <Chart1 />
               </Col>
+                <Col xs>
+                    <h1> Graph 2</h1>
+                    <Graph2 options={this.props.companies}/>
+                </Col>
             </Row>
-            {/*<Row>
-                          <Col xs>
-                              <h1>Graphic 3</h1>
-                              <WebStat/>
-                          </Col>
-                          <Col xs>
-                              <h1>Graphic 4</h1>
-                              <WebStat/>
-                          </Col>
-                      </Row>*/}
+            <Row>
+                <Col xs>
+                    <h1>Graphic 3</h1>
+                </Col>
+                <Col xs>
+                    <h1>Graphic 4</h1>
+                </Col>
+            </Row>
           </Grid>
         </div>
       </MuiThemeProvider>
