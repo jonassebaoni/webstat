@@ -32,8 +32,8 @@ class Chart3 extends React.Component {
 }
 export default withTracker(({filter}) => {
     // on recupere l'id de l'entreprise
-    console.log("id attraction: " + filter);
-    const handle = Meteor.subscribe('ticketsMonthly');
+    console.log(filter)
+    const handle = Meteor.subscribe('ticketsMonthly', 2018, filter);
     return {
         ready: handle.ready(),
         ticketsFiltered: TicketsMonthly.find().fetch(),

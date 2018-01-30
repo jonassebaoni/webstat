@@ -6,7 +6,7 @@ class Graph2 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            yearSelected: 2017,
+            yearSelected: new Date().getFullYear(),
         };
         this.handleChange = this.handleChange.bind(this);
     }
@@ -28,7 +28,7 @@ class Graph2 extends React.Component {
             <div>
                 <Select
                     name="year selected"
-                    value={this.state.year}
+                    value={this.state.yearSelected}
                     onChange={this.handleChange}
                     options={listYears}
                 />

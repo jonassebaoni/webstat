@@ -18,7 +18,6 @@ class Chart1 extends React.Component {
                 <div>pas de ticket disponible</div>
             )
         }
-        console.log(this.props.ticketsFiltered);
         return (
             <LineChart t width={730} height={250} data={this.props.ticketsFiltered}
                        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>

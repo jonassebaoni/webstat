@@ -21,7 +21,7 @@ Meteor.publish("ticketsAggregated", function () {
 });
 
 // Compute the number of tickets sold every month for a chosen date
-Meteor.publish("ticketsMonthly", function (yearSelected, companySelected) {
+Meteor.publish("ticketsMonthly", function (yearSelected, filter) {
     ReactiveAggregate(this, Tickets, [
         {
             $project: {
@@ -32,7 +32,8 @@ Meteor.publish("ticketsMonthly", function (yearSelected, companySelected) {
         },
         {
             $match: {
-                "year": yearSelected
+                "year": yearSelected,
+                idCompany: filter
             }
         },
         {

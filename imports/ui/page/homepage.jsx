@@ -14,7 +14,6 @@ class HomePage extends React.Component {
     }
   }
   render() {
-    console.log(this.props.companies);
     if(!this.props.ready) {
       return <div>chargement</div>
     }
@@ -24,17 +23,17 @@ class HomePage extends React.Component {
           <Grid fluid>
             <Row around="xs">
               <Col xs={4}>
-                <h1> Graph 1 </h1>
-                <Chart1 />
+                <h1> Number of tickets per attraction </h1>
+                <Chart1 options={this.props.companies}/>
               </Col>
                 <Col xs={4}>
-                    <h1> Graph 2</h1>
+                    <h1> Evolution of tickets sold over months </h1>
                     <Graph2 />
                 </Col>
             </Row>
             <Row around="xs">
                 <Col xs={4}>
-                    <h1>Graphic 3</h1>
+                    <h1> Evolution of tickets sold over months </h1>
                     <Graph3 options={this.props.companies}/>
                 </Col>
                 <Col xs={4}>
