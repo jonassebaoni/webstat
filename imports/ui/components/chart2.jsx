@@ -21,8 +21,9 @@ class Chart1 extends React.Component {
         return (
             <LineChart t width={730} height={250} data={this.props.ticketsFiltered}
                        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                <XAxis dataKey="_id"  name="Months" label="Months" />
+                <XAxis dataKey="_id"  name="months" label="months" />
                 <YAxis type="number" allowDecimals={false}/>
+                <CartesianGrid strokeDasharray="3 3"/>
                 <Tooltip/>
                 <Legend/>
                 <Line type="monotone" dataKey="sum" stroke="#82ca9d" name="number of tickets"/>
@@ -30,8 +31,8 @@ class Chart1 extends React.Component {
         );
     }
 }
-export default withTracker(({yearSelected}) => {
-    const handle = Meteor.subscribe('ticketsMonthly', yearSelected);
+export default withTracker(({}) => {
+    const handle = Meteor.subscribe('ticketsMonthly');
     return {
         ready: handle.ready(),
         ticketsFiltered: TicketsMonthly.find().fetch(),

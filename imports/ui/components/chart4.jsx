@@ -1,11 +1,11 @@
 import React from 'react';
 import {withTracker} from 'meteor/react-meteor-data';
-import  { TicketsMonthly }  from '../../../imports/Collections/ticketsAggregated';
+import  { TicketsWeekly }  from '../../../imports/Collections/ticketsAggregated';
 import Recharts from "recharts";
 
-const {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} = Recharts;
+const {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend} = Recharts;
 
-class Chart3 extends React.Component {
+class Chart4 extends React.Component {
     render() {
         if (!this.props.ready) {
             return (
@@ -19,25 +19,25 @@ class Chart3 extends React.Component {
             )
         }
         return (
-            <BarChart width={600} height={300} data={this.props.ticketsFiltered}
-                      margin={{top: 5, right: 30, left: 20, bottom: 5}}>
-                <XAxis dataKey="_id" tick={false} name="months" label="months" />
+            <LineChart t width={730} height={250} data={this.props.ticketsFiltered}
+                       margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                <XAxis dataKey="_id"  name="weeks" label="weeks" />
                 <YAxis type="number" allowDecimals={false}/>
                 <CartesianGrid strokeDasharray="3 3"/>
                 <Tooltip/>
                 <Legend/>
-                <Bar dataKey="sum" fill="#8884d8" name="number of tickets"/>
-            </BarChart>
+                <Line type="monotone" dataKey="sum" stroke="#82ca9d" name="number of tickets"/>
+            </LineChart>
         );
     }
 }
 export default withTracker(({filter}) => {
     // on recupere l'id de l'entreprise
     console.log(filter)
-    const handle = Meteor.subscribe('ticketsMonthly', filter);
+    const handle = Meteor.subscribe('ticketsWeekly', filter);
     return {
         ready: handle.ready(),
-        ticketsFiltered: TicketsMonthly.find().fetch(),
+        ticketsFiltered: TicketsWeekly.find().fetch(),
 
     };
-})(Chart3);
+})(Chart4);

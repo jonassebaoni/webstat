@@ -3,7 +3,7 @@ import {ReactiveAggregate} from 'meteor/jcbernack:reactive-aggregate';
 import Tickets from '../../imports/Collections/tickets';
 import {TicketsAggregated, TicketsMonthly, TicketsWeekly, TicketsDaily} from "../../imports/Collections/ticketsAggregated";
 
-// Compute the number of tickets sold per attraction
+// Calcule le nombre de tickets total par attraction
 Meteor.publish("ticketsAggregated", function () {
   ReactiveAggregate(this, Tickets, [
       {
@@ -20,97 +20,94 @@ Meteor.publish("ticketsAggregated", function () {
       }], {clientCollection: "ticketsAggregated"});
 });
 
-// Compute the number of tickets sold every month for a chosen date
-Meteor.publish("ticketsMonthly", function (yearSelected, filter) {
+// Groupe les tickets par mois et par attraction sélectionnée
+Meteor.publish("ticketsMonthly", function (companySelected) {
     ReactiveAggregate(this, Tickets, [
-        {
-            $project: {
-                "year": {$year: "$passingTime"},
-                "month": {$month: "$passingTime"},
 
-            }
-        },
         {
             $match: {
-                "year": yearSelected,
-                idCompany: filter
+                idCompany: companySelected
             }
         },
         {
             $group: {
-                "_id": "$month",
-                "sum": {$sum: 1}
+                _id: {$month: "$passingTime"},
+                sum: {$sum: 1}
+            },
+        } ,
+        {
+            $sort: {
+                _id: 1
             }
-        },
-        {
-            $sort: {"_id" : 1}
-        },
-        {
-            $limit: 15
         }], {clientCollection: "ticketsMonthly"});
 });
 
-// Compute the number of tickets sold every week for a chosen date
-Meteor.publish("ticketsWeekly", function (yearSelected, monthSelected) {
+// Groupe les tickets par semaine et par attraction sélectionnée
+Meteor.publish("ticketsWeekly", function (companySelected) {
     ReactiveAggregate(this, Tickets, [
-        {
-            $project: {
-                "year": {$year: "$passingTime"},
-                "month": {$month: "$passingTime"},
-                "week": {$week: "$passingTime"}
 
-            }
-        },
         {
             $match: {
-                "year": yearSelected,
-                "month": monthSelected
+                idCompany: companySelected,
             }
         },
         {
             $group: {
-                "_id": "$week",
-                "sum": {$sum: 1}
+                _id: {$week: "$passingTime"},
+                sum: {$sum: 1}
+            },
+        } ,
+        {
+            $sort: {
+                _id: 1
             }
-        },
-        {
-            $sort: {"_id" : 1}
-        },
-        {
-            $limit: 15
         }], {clientCollection: "ticketsWeekly"});
 });
 
 
-// Compute the number of tickets sold every day for a chosen date
-Meteor.publish("ticketsDaily", function (yearSelected, monthSelected, weekSelected) {
-    ReactiveAggregate(this, Tickets, [
-        {
-            $project: {
-                "year": {$year: "$passingTime"},
-                "month": {$month: "$passingTime"},
-                "week": {$week: "$passingTime"},
-                "day": {$dayOfWeek: "$passingTime"}
 
+Meteor.methods({
+   getTicketsByMonths(filter) {
+       let group = {
+           _id: {
+               month: {$month: "$passingTime"}
+           },
+           total: {
+               $sum: 1
+           }
+       };
+
+       let ticketsFiltered = Tickets.aggregate(
+           { $match: {idCompany: filter}},
+           { $group: group },
+           { $sort: {_id: 1} }
+       );
+
+       ticketsFiltered.sort(function(a,b) { return a._id.month - b._id.month;});
+
+       return ticketsFiltered;
+   },
+    getTicketsByWeeks(filter) {
+        let group = {
+            _id: {
+                week: {$week: "$passingTime"}
+            },
+            total: {
+                $sum: 1
             }
-        },
-        {
-            $match: {
-                "year": yearSelected,
-                "month": monthSelected,
-                "week": weekSelected,
-            }
-        },
-        {
-            $group: {
-                "_id": "$day",
-                "sum": {$sum: 1}
-            }
-        },
-        {
-            $sort: {"_id" : 1}
-        },
-        {
-            $limit: 15
-        }], {clientCollection: "ticketsDaily"});
+        };
+
+        let ticketsFiltered = Tickets.aggregate(
+            { $match: {idCompany: filter}},
+            { $group: group },
+            { $sort: {_id: 1} }
+        );
+
+        ticketsFiltered.sort(function(a,b) { return a._id.week - b._id.week;});
+
+        return ticketsFiltered;
+    }
 });
+
+
+

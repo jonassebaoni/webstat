@@ -19,7 +19,7 @@ class Graph3 extends React.Component {
         });
         this.setState({
             options,
-            query: options[0].value, // valeur par defaut
+            query: options[0].value, // valeur par defaut (Sudri'Cub)
         });
     }
 
@@ -40,7 +40,7 @@ class Graph3 extends React.Component {
                     onChange={this.handleChange}
                     options={this.state.options}
                 />
-                <Chart3 filter={this.state.query} yearSelected={this.state.year}/>
+                <Chart3 filter={this.state.query} />
             </div>
         );
     }

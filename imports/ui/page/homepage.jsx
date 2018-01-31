@@ -1,7 +1,8 @@
 import React from 'react';
 import Chart1 from '../components/chart1.jsx';
-import Graph2 from '../components/graph-2.jsx';
-import Graph3 from '../components/graph-3.jsx';
+import Graph2 from '../components/graph2.jsx';
+import Graph3 from '../components/graph3.jsx';
+import Graph4 from '../components/graph4.jsx';
 import {withTracker} from 'meteor/react-meteor-data';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Grid, Row, Col } from 'react-flexbox-grid';
@@ -37,7 +38,8 @@ class HomePage extends React.Component {
                     <Graph3 options={this.props.companies}/>
                 </Col>
                 <Col xs={4}>
-                    <h1>Graphic 4</h1>
+                    <h1>Evolution of tickets sold over weeks </h1>
+                    <Graph4 options={this.props.companies}/>
                 </Col>
             </Row>
           </Grid>
