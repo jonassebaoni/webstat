@@ -26,7 +26,7 @@ class Chart3 extends React.Component {
                 <CartesianGrid strokeDasharray="3 3"/>
                 <Tooltip/>
                 <Legend/>
-                <Bar dataKey="sum" fill="#8884d8" name="number of tickets"/>
+                <Bar dataKey="sum" fill="#009933" name="number of tickets"/>
             </BarChart>
         );
     }

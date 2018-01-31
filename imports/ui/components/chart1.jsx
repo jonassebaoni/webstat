@@ -24,7 +24,7 @@ class Chart1 extends React.Component {
         <BarChart width={600} height={300} data={this.props.ticketsFiltered}
                   margin={{top: 5, right: 30, left: 20, bottom: 5}}>
           <XAxis dataKey="_id" tick={false} name="ID attraction" label="attractions" />
-          <YAxis type="number" allowDecimals={false} label="tickets"/>
+          <YAxis type="number" allowDecimals={false} />
             <CartesianGrid strokeDasharray="3 3"/>
           <Tooltip/>
           <Legend/>

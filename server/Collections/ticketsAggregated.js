@@ -106,8 +106,31 @@ Meteor.methods({
         ticketsFiltered.sort(function(a,b) { return a._id.week - b._id.week;});
 
         return ticketsFiltered;
-    }
+    },
+    getTicketsByDaysOfWeek(filter) {
+        let group = {
+            _id: {
+                week: {$dayOfWeek: "$passingTime"}
+            },
+            total: {
+                $sum: 1
+            }
+        };
+
+        let ticketsFiltered = Tickets.aggregate(
+            { $match: {idCompany: filter}},
+            { $group: group },
+            { $sort: {_id: 1} }
+        );
+
+        ticketsFiltered.sort(function(a,b) { return a._id.week - b._id.week;});
+
+        return ticketsFiltered;
+    },
+
 });
+
+
 
 
 

@@ -5,7 +5,7 @@ import Recharts from "recharts";
 
 const {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend} = Recharts;
 
-class Chart2 extends React.Component {
+class Chart5 extends React.Component {
     render() {
         if (!this.props.ready) {
             return (
@@ -38,4 +38,4 @@ export default withTracker(({}) => {
         ticketsFiltered: TicketsMonthly.find().fetch(),
 
     };
-})(Chart2);
+})(Chart5);

@@ -26,7 +26,7 @@ class Chart4 extends React.Component {
                 <CartesianGrid strokeDasharray="3 3"/>
                 <Tooltip/>
                 <Legend/>
-                <Line type="monotone" dataKey="sum" stroke="#82ca9d" name="number of tickets"/>
+                <Line type="monotone" dataKey="sum" stroke="#ff0000" name="number of tickets"/>
             </LineChart>
         );
     }
