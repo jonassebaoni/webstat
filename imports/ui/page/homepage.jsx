@@ -24,31 +24,31 @@ class HomePage extends React.Component {
         <div className="layout">
           <Grid fluid>
             <Row around="xs">
-              <Col xs={4}>
+              <Col>
                 <h1> Number of tickets per attraction </h1>
                 <Chart1 options={this.props.companies}/>
               </Col>
-                <Col xs={4}>
+                <Col>
                     <h1> Evolution of tickets sold over months </h1>
                     <Graph2 />
                 </Col>
             </Row>
             <Row around="xs">
-                <Col xs={4}>
+                <Col>
                     <h1> Evolution of tickets sold over months </h1>
                     <Graph3 options={this.props.companies}/>
                 </Col>
-                <Col xs={4}>
+                <Col>
                     <h1>Evolution of tickets sold over weeks </h1>
                     <Graph4 options={this.props.companies}/>
                 </Col>
             </Row>
               <Row around="xs">
-                  <Col xs={4}>
+                  <Col>
                       <h1> Tickets per day </h1>
                       <Graph5 options={this.props.companies}/>
                   </Col>
-                  <Col xs={4}>
+                  <Col>
                       <h1> Graph </h1>
                   </Col>
               </Row>

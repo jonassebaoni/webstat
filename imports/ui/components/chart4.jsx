@@ -19,7 +19,7 @@ class Chart4 extends React.Component {
             )
         }
         return (
-            <LineChart t width={730} height={250} data={this.props.ticketsFiltered}
+            <LineChart t width={700} height={350} data={this.props.ticketsFiltered}
                        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                 <XAxis dataKey="_id"  name="weeks" label="weeks" />
                 <YAxis type="number" allowDecimals={false}/>
@@ -33,7 +33,6 @@ class Chart4 extends React.Component {
 }
 export default withTracker(({filter}) => {
     // on recupere l'id de l'entreprise
-    console.log(filter)
     const handle = Meteor.subscribe('ticketsWeekly', filter);
     return {
         ready: handle.ready(),

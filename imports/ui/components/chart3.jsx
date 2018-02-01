@@ -2,6 +2,7 @@ import React from 'react';
 import {withTracker} from 'meteor/react-meteor-data';
 import  { TicketsMonthly }  from '../../../imports/Collections/ticketsAggregated';
 import Recharts from "recharts";
+import moment from "moment";
 
 const {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} = Recharts;
 
@@ -19,9 +20,9 @@ class Chart3 extends React.Component {
             )
         }
         return (
-            <BarChart width={600} height={300} data={this.props.ticketsFiltered}
+            <BarChart width={700} height={350} data={this.props.ticketsFiltered}
                       margin={{top: 5, right: 30, left: 20, bottom: 5}}>
-                <XAxis dataKey="_id" tick={false} name="months" label="months" />
+                <XAxis dataKey="_id"  name="months" label="months" tickFormatter={(tick) => {return moment(tick, 'MM').format('MMMM');}}/>
                 <YAxis type="number" allowDecimals={false}/>
                 <CartesianGrid strokeDasharray="3 3"/>
                 <Tooltip/>
@@ -33,7 +34,6 @@ class Chart3 extends React.Component {
 }
 export default withTracker(({filter}) => {
     // on recupere l'id de l'entreprise
-    console.log(filter)
     const handle = Meteor.subscribe('ticketsMonthly', filter);
     return {
         ready: handle.ready(),

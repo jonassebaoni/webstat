@@ -28,6 +28,7 @@ class Graph3 extends React.Component {
     }
 
     handleChange(selectedOption) {
+        console.log(selectedOption.value);
         this.setState({ query: selectedOption.value });
     }
 

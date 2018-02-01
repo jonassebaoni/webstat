@@ -19,7 +19,7 @@ class Chart5 extends React.Component {
             )
         }
         return (
-            <LineChart t width={730} height={250} data={this.props.ticketsFiltered}
+            <LineChart t width={700} height={350} data={this.props.ticketsFiltered}
                        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                 <XAxis dataKey="_id"  name="months" label="months" />
                 <YAxis type="number" allowDecimals={false}/>

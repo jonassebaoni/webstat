@@ -7,6 +7,23 @@ const {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} = Recharts;
 
 class Chart1 extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.tickFormatter = this.tickFormatter.bind(this);
+    }
+
+    tickFormatter(tick) {
+        let companyName = "";
+        for(let i=0; i<this.props.options.length; i++){
+            if(tick == this.props.options[i]["_id"]){
+                companyName = this.props.options[i]["name"];
+                break;
+            }
+        }
+        //console.log("company id : "+ tick + " company name : " + companyName);
+        return companyName;
+    }
+
   render() {
     if (!this.props.ready) {
       return (
@@ -21,9 +38,9 @@ class Chart1 extends React.Component {
 
     }
       return (
-        <BarChart width={600} height={300} data={this.props.ticketsFiltered}
+        <BarChart width={800} height={350} data={this.props.ticketsFiltered}
                   margin={{top: 5, right: 30, left: 20, bottom: 5}}>
-          <XAxis dataKey="_id" tick={false} name="ID attraction" label="attractions" />
+          <XAxis dataKey="_id" tickFormatter={this.tickFormatter} name="ID attraction" label="attractions" />
           <YAxis type="number" allowDecimals={false} />
             <CartesianGrid strokeDasharray="3 3"/>
           <Tooltip/>
@@ -33,6 +50,7 @@ class Chart1 extends React.Component {
       );
   }
 }
+
 export default withTracker(() => {
   const handle = Meteor.subscribe('ticketsAggregated');
   return {
