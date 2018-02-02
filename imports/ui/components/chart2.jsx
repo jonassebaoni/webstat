@@ -20,7 +20,7 @@ class Chart2 extends React.Component {
             )
         }
         return (
-            <LineChart t width={700} height={350} data={this.props.ticketsFiltered}
+            <LineChart width={700} height={350} data={this.props.ticketsFiltered}
                        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                 <XAxis dataKey="_id"  name="months" label="months" tickFormatter={(tick) => {return moment(tick, 'MM').format('MMMM');}} />
                 <YAxis type="number" allowDecimals={false}/>
@@ -32,8 +32,8 @@ class Chart2 extends React.Component {
         );
     }
 }
-export default withTracker(({}) => {
-    const handle = Meteor.subscribe('ticketsMonthly');
+export default withTracker((filter, yearSelected) => {
+    const handle = Meteor.subscribe('ticketsMonthly', 'WsfwmSogru3CpzsHd', yearSelected);
     return {
         ready: handle.ready(),
         ticketsFiltered: TicketsMonthly.find().fetch(),

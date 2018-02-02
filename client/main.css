@@ -15,3 +15,10 @@ body {
 h1 {
     text-align: center;
 }
+
+.Select {
+    width: 150px;
+    margin-left: 60px;
+    margin-bottom: 10px;
+
+}

@@ -21,17 +21,29 @@ Meteor.publish("ticketsAggregated", function () {
 });
 
 // Groupe les tickets par mois et par attraction sélectionnée
-Meteor.publish("ticketsMonthly", function (companySelected) {
+Meteor.publish("ticketsMonthly", function (companySelected, yearSelected) {
     ReactiveAggregate(this, Tickets, [
 
         {
+            $project: {
+                year: {
+                    $year: "$passingTime"
+                },
+                month: {
+                    $month: "$passingTime"
+                },
+                idCompany: 1,
+            }
+        },
+        {
             $match: {
-                idCompany: companySelected
+                idCompany: companySelected,
+                year: yearSelected,
             }
         },
         {
             $group: {
-                _id: {$month: "$passingTime"},
+                _id: "$month",
                 sum: {$sum: 1}
             },
         } ,
@@ -43,17 +55,32 @@ Meteor.publish("ticketsMonthly", function (companySelected) {
 });
 
 // Groupe les tickets par semaine et par attraction sélectionnée
-Meteor.publish("ticketsWeekly", function (companySelected) {
+Meteor.publish("ticketsWeekly", function (companySelected, yearSelected, weekSelected) {
     ReactiveAggregate(this, Tickets, [
+        {
+            $project: {
+                year: {
+                    $year: "$passingTime"
+                },
+                week: {
+                    $week: "$passingTime"
+                },
+                day: {
+                    $dayOfWeek: "$passingTime"
+                },
+                passingTime: 1,
+                idCompany: 1
+            }
+        },
 
         {
             $match: {
-                idCompany: companySelected,
+                idCompany: companySelected, year: yearSelected, week: weekSelected
             }
         },
         {
             $group: {
-                _id: {$week: "$passingTime"},
+                _id: "$day",
                 sum: {$sum: 1}
             },
         } ,
@@ -87,43 +114,55 @@ Meteor.methods({
 
        return ticketsFiltered;
    },
-    getTicketsByWeeks(filter) {
+    getTicketsByWeek(filter) {
+
         let group = {
-            _id: {
-                week: {$week: "$passingTime"}
-            },
+            _id: day,
             total: {
                 $sum: 1
             }
         };
 
         let ticketsFiltered = Tickets.aggregate(
-            { $match: {idCompany: filter}},
+            { $project: project},
+            { $match: {idCompany: filter, year: 2018, month: 3}},
             { $group: group },
             { $sort: {_id: 1} }
         );
-
-        ticketsFiltered.sort(function(a,b) { return a._id.week - b._id.week;});
 
         return ticketsFiltered;
     },
-    getTicketsByDaysOfWeek(filter) {
-        let group = {
-            _id: {
-                week: {$dayOfWeek: "$passingTime"}
+    getTicketsByDaysOfWeek() {
+
+        let project = {
+            year: {
+                $year: "$passingTime"
             },
+            month: {
+                $month: "$passingTime"
+            },
+            day: {
+              $dayOfMonth: "$passingTime"
+            },
+            passingTime: 1,
+            idCompany: 1
+        };
+
+        let group = {
+            _id: "$day",
             total: {
                 $sum: 1
             }
         };
 
         let ticketsFiltered = Tickets.aggregate(
-            { $match: {idCompany: filter}},
+            { $project: project},
+            { $match: {idCompany: "WsfwmSogru3CpzsHd", year: 2018, month: 1 }},
             { $group: group },
             { $sort: {_id: 1} }
         );
 
-        ticketsFiltered.sort(function(a,b) { return a._id.week - b._id.week;});
+        ticketsFiltered.sort(function(a,b) { return a._id.day - b._id.day;});
 
         return ticketsFiltered;
     },

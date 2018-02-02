@@ -39,7 +39,7 @@ class HomePage extends React.Component {
                     <Graph3 options={this.props.companies}/>
                 </Col>
                 <Col>
-                    <h1>Evolution of tickets sold over weeks </h1>
+                    <h1>Evolution of tickets sold over the current week </h1>
                     <Graph4 options={this.props.companies}/>
                 </Col>
             </Row>

@@ -32,9 +32,11 @@ class Chart3 extends React.Component {
         );
     }
 }
-export default withTracker(({filter}) => {
+export default withTracker(({filter, yearSelected}) => {
     // on recupere l'id de l'entreprise
-    const handle = Meteor.subscribe('ticketsMonthly', filter);
+    console.log(filter);
+    console.log(yearSelected);
+    const handle = Meteor.subscribe('ticketsMonthly', filter, yearSelected);
     return {
         ready: handle.ready(),
         ticketsFiltered: TicketsMonthly.find().fetch(),

@@ -2,6 +2,11 @@ import React from 'react';
 import Select from 'react-select';
 import Chart2 from './chart2.jsx';
 
+const listYears = [
+    {value: 2017, label: 2017},
+    {value: 2018, label: 2018}
+];
+
 class Graph2 extends React.Component {
     constructor(props) {
         super(props);
@@ -20,10 +25,7 @@ class Graph2 extends React.Component {
     }
 
     render() {
-        const listYears = [
-            {value: 2017, label: 2017},
-            {value: 2018, label: 2018}
-            ];
+
         return (
             <div>
                 <Select

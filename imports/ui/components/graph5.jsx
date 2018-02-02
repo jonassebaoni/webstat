@@ -3,12 +3,18 @@ import Select from 'react-select';
 import Chart5 from './chart5.jsx';
 import PickDate from './pickdate.jsx';
 
+const listYears = [
+    {value: 2017, label: 2017},
+    {value: 2018, label: 2018}
+];
+
 class Graph5 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             query: '',
             options: [],
+            yearSelected: new Date().getFullYear(),
         };
         this.handleChange = this.handleChange.bind(this);
     }
@@ -29,14 +35,19 @@ class Graph5 extends React.Component {
     }
 
     handleChange(selectedOption) {
-        this.setState({ query: selectedOption.value });
+        this.setState({ yearSelected: selectedOption.value });
     }
 
     render() {
         return (
             <div>
-                <PickDate/>
-                <Chart5 filter={this.state.query} />
+                <Select
+                    name="year selected"
+                    value={this.state.yearSelected}
+                    onChange={this.handleChange}
+                    options={listYears}
+                />
+                <Chart5 filter={this.state.yearSelected} />
             </div>
         );
     }
