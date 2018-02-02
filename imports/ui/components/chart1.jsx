@@ -5,6 +5,11 @@ import Recharts from "recharts"
 
 const {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Label, Legend, ResponsiveContainer} = Recharts;
 
+const LabelStyle = {
+    fontSize: '1em',
+    fontWeight: 'bold'
+};
+
 class Chart1 extends React.Component {
 
     constructor(props) {
@@ -20,7 +25,6 @@ class Chart1 extends React.Component {
                 break;
             }
         }
-        //console.log("company id : "+ tick + " company name : " + companyName);
         return companyName;
     }
 
@@ -39,12 +43,14 @@ class Chart1 extends React.Component {
     }
       return (
         <BarChart data={this.props.ticketsFiltered}
-                  margin={{top: 5, right: 30, left: 20, bottom: 5}}
-                  width={730} height={350}>
+                  margin={{top: 25, right: 30, left: 20, bottom: 25}}
+                  width={750} height={350}>
           <XAxis dataKey="_id" tickFormatter={this.tickFormatter} name="ID attraction" >
-              <Label value="attraction name" position="insideBottomRight" />
+              <Label value="attraction name" position="insideBottomRight" style={LabelStyle}/>
           </XAxis>
-          <YAxis type="number" allowDecimals={false} />
+          <YAxis type="number" allowDecimals={false}>
+              <Label angle={270} position='insideLeft' style={{ textAnchor: 'middle' }} value="tickets total" style={LabelStyle}/>
+          </YAxis>
             <CartesianGrid strokeDasharray="3 3"/>
           <Tooltip/>
           <Legend/>

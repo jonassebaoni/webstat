@@ -11,30 +11,53 @@ class Graph2 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            query: '',
+            options: [],
             yearSelected: new Date().getFullYear(),
         };
-        this.handleChange = this.handleChange.bind(this);
+        this.handleCompanySelected = this.handleCompanySelected.bind(this);
+        this.handleYearSelected = this.handleYearSelected.bind(this);
+    }
+    componentWillMount() {
+        //on recupere les entreprises depuis le parent et on l'injecte dans le state
+        const options = [];
+        this.props.options.map((company) => {
+            options.push({value: company._id, label: company.name})
+        });
+        this.setState({
+            options,
+            query: options[0].value, // valeur par defaut (Sudri'Cub)
+        });
     }
 
     componentDidMount() {
         require('react-select/dist/react-select.css');
     }
 
-    handleChange(selectedOption) {
+    handleCompanySelected(selectedOption) {
+        this.setState({ query: selectedOption.value });
+    }
+
+    handleYearSelected(selectedOption) {
         this.setState({ yearSelected: selectedOption.value });
     }
 
     render() {
-
         return (
             <div>
                 <Select
                     name="year selected"
                     value={this.state.yearSelected}
-                    onChange={this.handleChange}
+                    onChange={this.handleYearSelected}
                     options={listYears}
                 />
-                <Chart2  yearSelected={this.state.yearSelected} />
+                <Select
+                    name="id selected"
+                    value={this.state.query}
+                    onChange={this.handleCompanySelected}
+                    options={this.state.options}
+                />
+                <Chart2 filter={this.state.query} yearSelected={this.state.yearSelected} />
             </div>
         );
     }
