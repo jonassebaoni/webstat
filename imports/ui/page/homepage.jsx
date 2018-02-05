@@ -10,6 +10,10 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import Companies from "../../Collections/companies";
 import ToolBar from "material-ui/Toolbar"
 
+const divStyle = {
+  border: 'ridge',
+};
+
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
@@ -25,22 +29,22 @@ class HomePage extends React.Component {
         <div className="layout">
             <ToolBar title={"My AppBar"}/>
           <Grid fluid>
-            <Row around="xs">
-              <Col>
+            <Row>
+              <Col xs={6} style={divStyle}>
                 <h1> Number of tickets per attraction </h1>
                 <Chart1 options={this.props.companies}/>
               </Col>
-                <Col>
+                <Col xs={6} style={divStyle}>
                     <h1> Evolution of tickets sold over months </h1>
                     <Graph2 options={this.props.companies}/>
                 </Col>
             </Row>
             <Row around="xs">
-                <Col>
+                <Col xs={6} style={divStyle}>
                     <h1> Evolution of tickets sold over months </h1>
                     <Graph3 options={this.props.companies}/>
                 </Col>
-                <Col>
+                <Col xs={6} style={divStyle}>
                     <h1>Evolution of tickets sold over the current week </h1>
                     <Graph4 options={this.props.companies}/>
                 </Col>
