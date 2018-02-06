@@ -1,7 +1,6 @@
 import React from 'react';
 import Chart1 from '../components/chart1.jsx';
-import Graph2 from '../components/graph2.jsx';
-import Graph3 from '../components/graph3.jsx';
+import Graph3 from '../components/graph2-3.jsx';
 import Graph4 from '../components/graph4.jsx';
 import Graph5 from '../components/graph5.jsx';
 import {withTracker} from 'meteor/react-meteor-data';
@@ -10,46 +9,43 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import Companies from "../../Collections/companies";
 import ToolBar from "material-ui/Toolbar"
 
-const divStyle = {
-  border: 'ridge',
-};
 
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-    }
   }
+
   render() {
     if(!this.props.ready) {
       return <div>chargement</div>
     }
-    return (
-      <MuiThemeProvider>
-        <div className="layout">
-            <ToolBar title={"My AppBar"}/>
-          <Grid fluid>
-            <Row>
-              <Col xs={6} style={divStyle}>
-                <h1> Number of tickets per attraction </h1>
-                <Chart1 options={this.props.companies}/>
-              </Col>
-                <Col xs={6} style={divStyle}>
-                    <h1> Evolution of tickets sold over months </h1>
-                    <Graph2 options={this.props.companies}/>
-                </Col>
-            </Row>
-            <Row around="xs">
-                <Col xs={6} style={divStyle}>
-                    <h1> Evolution of tickets sold over months </h1>
-                    <Graph3 options={this.props.companies}/>
-                </Col>
-                <Col xs={6} style={divStyle}>
-                    <h1>Evolution of tickets sold over the current week </h1>
-                    <Graph4 options={this.props.companies}/>
-                </Col>
-            </Row>
-              {/*<Row around="xs">
+
+    else {
+        return (
+            <MuiThemeProvider>
+                <div className="layout">
+                    <ToolBar title={"My AppBar"}/>
+                    <Grid fluid>
+                        <Row>
+                            <Col xs={6}>
+                                <h1> Number of tickets per attraction </h1>
+                                <Chart1 options={this.props.companies}/>
+                            </Col>
+                            <Col xs={6}>
+                                <h1> Evolution of tickets sold over the year </h1>
+                                <Graph3 options={this.props.companies}/>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs={6}>
+                                <h1>Evolution of tickets sold over the current week </h1>
+                                <Graph4 options={this.props.companies}/>
+                            </Col>
+                            <Col xs={6}>
+                                <h1> Evolution of tickets sold over the current day</h1>
+                            </Col>
+                        </Row>
+                        {/*<Row around="xs">
                   <Col>
                       <h1> Tickets per day </h1>
                       <Graph5 options={this.props.companies}/>
@@ -58,10 +54,11 @@ class HomePage extends React.Component {
                       <h1> Graph </h1>
                   </Col>
               </Row>*/}
-          </Grid>
-        </div>
-      </MuiThemeProvider>
-    );
+                    </Grid>
+                </div>
+            </MuiThemeProvider>
+        );
+    }
   }
 }
 
