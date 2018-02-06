@@ -27,7 +27,7 @@ class Chart3 extends React.Component {
             <ResponsiveContainer aspect={16.0/9.0}>
                 <BarChart width={800} height={360} data={this.props.ticketsFiltered}
                           margin={{top: 25, right: 30, left: 20, bottom: 25}}>
-                    <XAxis dataKey="_id"  name="months" label="months" tickFormatter={(tick) => {return moment(tick, 'MM').format('MMMM');}}>
+                    <XAxis dataKey="_id"  name="months"  tickFormatter={(tick) => {return moment(tick, 'MM').format('MMMM');}}>
                         <Label value="months" position="insideBottomRight" style={LabelStyle}/>
                     </XAxis>
                     <YAxis type="number" allowDecimals={false}>
