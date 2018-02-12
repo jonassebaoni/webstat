@@ -11,8 +11,6 @@ const LabelStyle = {
     paddingTop: '20px',
 };
 
-const dayOfCurrentWeek = moment().isoWeekday();
-
 class Chart4 extends React.Component {
     render() {
         if (!this.props.ready) {
@@ -34,7 +32,7 @@ class Chart4 extends React.Component {
                         <Label value="days" position="insideBottomRight" style={LabelStyle}/>
                     </XAxis>
                     <YAxis type="number" allowDecimals={false}>
-                        <Label angle={270} position='insideLeft' style={{ textAnchor: 'middle' }} value="number of tickets" style={LabelStyle}/>
+                        <Label angle={270} position='insideLeft' style={{ textAnchor: 'middle' }} value="tickets" style={LabelStyle}/>
                     </YAxis>
                     <CartesianGrid strokeDasharray="3 3"/>
                     <Tooltip/>
@@ -47,7 +45,7 @@ class Chart4 extends React.Component {
 }
 export default withTracker(({filter}) => {
     // on recupere l'id de l'entreprise
-    const handle = Meteor.subscribe('ticketsWeekly', filter, new Date().getFullYear(), dayOfCurrentWeek);
+    const handle = Meteor.subscribe('ticketsWeekly', filter, new Date().getFullYear(), moment().week());
     return {
         ready: handle.ready(),
         ticketsFiltered: TicketsWeekly.find().fetch(),

@@ -6,8 +6,8 @@ import Graph5 from '../components/graph5.jsx';
 import {withTracker} from 'meteor/react-meteor-data';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Grid, Row, Col } from 'react-flexbox-grid';
-import Companies from "../../Collections/companies";
-import ToolBar from "material-ui/Toolbar"
+import Companies from '../../Collections/companies';
+import ToolBar from 'material-ui/Toolbar'
 
 
 class HomePage extends React.Component {
@@ -42,18 +42,10 @@ class HomePage extends React.Component {
                                 <Graph4 options={this.props.companies}/>
                             </Col>
                             <Col xs={6}>
-                                <h1> Evolution of tickets sold over the current day</h1>
+                                <h1> Evolution of tickets sold over the day</h1>
+                                <Graph5 options={this.props.companies} />
                             </Col>
                         </Row>
-                        {/*<Row around="xs">
-                  <Col>
-                      <h1> Tickets per day </h1>
-                      <Graph5 options={this.props.companies}/>
-                  </Col>
-                  <Col>
-                      <h1> Graph </h1>
-                  </Col>
-              </Row>*/}
                     </Grid>
                 </div>
             </MuiThemeProvider>

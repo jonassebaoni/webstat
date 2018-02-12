@@ -91,83 +91,47 @@ Meteor.publish("ticketsWeekly", function (companySelected, yearSelected, weekSel
         }], {clientCollection: "ticketsWeekly"});
 });
 
-
-
-Meteor.methods({
-   getTicketsByMonths(filter) {
-       let group = {
-           _id: {
-               month: {$month: "$passingTime"}
-           },
-           total: {
-               $sum: 1
-           }
-       };
-
-       let ticketsFiltered = Tickets.aggregate(
-           { $match: {idCompany: filter}},
-           { $group: group },
-           { $sort: {_id: 1} }
-       );
-
-       ticketsFiltered.sort(function(a,b) { return a._id.month - b._id.month;});
-
-       return ticketsFiltered;
-   },
-    getTicketsByWeek(filter) {
-
-        let group = {
-            _id: day,
-            total: {
-                $sum: 1
+Meteor.publish("ticketsDaily", function (companySelected, date) {
+    ReactiveAggregate(this, Tickets, [
+        {
+            $project: {
+                year: {
+                    $year: "$passingTime"
+                },
+                month: {
+                    $month: "$passingTime"
+                },
+                day: {
+                    $dayOfMonth: "$passingTime"
+                },
+                hours: {
+                    $hour: "$passingTime"
+                },
+                passingTime: 1,
+                idCompany: 1
             }
-        };
+        },
 
-        let ticketsFiltered = Tickets.aggregate(
-            { $project: project},
-            { $match: {idCompany: filter, year: 2018, month: 3}},
-            { $group: group },
-            { $sort: {_id: 1} }
-        );
-
-        return ticketsFiltered;
-    },
-    getTicketsByDaysOfWeek() {
-
-        let project = {
-            year: {
-                $year: "$passingTime"
-            },
-            month: {
-                $month: "$passingTime"
-            },
-            day: {
-              $dayOfMonth: "$passingTime"
-            },
-            passingTime: 1,
-            idCompany: 1
-        };
-
-        let group = {
-            _id: "$day",
-            total: {
-                $sum: 1
+        {
+            $match: {
+                idCompany: companySelected, year: date["years"], month: date["months"]+1, day: date["date"]
             }
-        };
-
-        let ticketsFiltered = Tickets.aggregate(
-            { $project: project},
-            { $match: {idCompany: "WsfwmSogru3CpzsHd", year: 2018, month: 1 }},
-            { $group: group },
-            { $sort: {_id: 1} }
-        );
-
-        ticketsFiltered.sort(function(a,b) { return a._id.day - b._id.day;});
-
-        return ticketsFiltered;
-    },
-
+        },
+        {
+            $group: {
+                _id: "$hours",
+                sum: {$sum: 1}
+            },
+        } ,
+        {
+            $sort: {
+                _id: 1
+            }
+        }], {clientCollection: "ticketsDaily"});
 });
+
+
+
 
 
 

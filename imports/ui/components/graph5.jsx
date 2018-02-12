@@ -1,12 +1,8 @@
 import React from 'react';
 import Select from 'react-select';
+import DatePicker from 'material-ui/DatePicker';
 import Chart5 from './chart5.jsx';
-import PickDate from './pickdate.jsx';
 
-const listYears = [
-    {value: 2017, label: 2017},
-    {value: 2018, label: 2018}
-];
 
 class Graph5 extends React.Component {
     constructor(props) {
@@ -14,10 +10,12 @@ class Graph5 extends React.Component {
         this.state = {
             query: '',
             options: [],
-            yearSelected: new Date().getFullYear(),
+            controlledDate: new Date(),
         };
-        this.handleChange = this.handleChange.bind(this);
+        this.handleCompanySelected = this.handleCompanySelected.bind(this);
+        this.handleDateSelected = this.handleDateSelected.bind(this);
     }
+
     componentWillMount() {
         //on recupere les entreprises depuis le parent et on l'injecte dans le state
         const options = [];
@@ -34,20 +32,35 @@ class Graph5 extends React.Component {
         require('react-select/dist/react-select.css');
     }
 
-    handleChange(selectedOption) {
-        this.setState({ yearSelected: selectedOption.value });
+    handleCompanySelected(selectedOption) {
+        this.setState({ query: selectedOption.value });
     }
+
+    handleDateSelected = (event, date) => {
+        console.log(date);
+        this.setState({
+            controlledDate: date
+        });
+    };
 
     render() {
         return (
             <div>
-                <Select
-                    name="year selected"
-                    value={this.state.yearSelected}
-                    onChange={this.handleChange}
-                    options={listYears}
-                />
-                <Chart5 filter={this.state.yearSelected} />
+                <div style={{display: 'flex', flexDirection: 'row'}}>
+                    <DatePicker
+                        hintText="Date Input"
+                        value={this.state.controlledDate}
+                        onChange={this.handleDateSelected}
+                        style={{marginLeft: "60px", margiBottom: "10px"}}
+                    />
+                    <Select
+                        name="year selected"
+                        value={this.state.query}
+                        onChange={this.handleCompanySelected}
+                        options={this.state.options}
+                    />
+                </div>
+                <Chart5 filter={this.state.query} date={this.state.controlledDate} />
             </div>
         );
     }

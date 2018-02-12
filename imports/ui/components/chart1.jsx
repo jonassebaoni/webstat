@@ -52,7 +52,7 @@ class Chart1 extends React.Component {
                   <Label value="attraction name" position="insideBottomRight" style={LabelStyle}/>
               </XAxis>
               <YAxis type="number" allowDecimals={false}>
-                  <Label angle={270} position='insideLeft' style={{ textAnchor: 'middle' }} value="tickets total" style={LabelStyle}/>
+                  <Label angle={270} position='insideLeft' style={{ textAnchor: 'middle' }} value="total tickets" style={LabelStyle}/>
               </YAxis>
                 <CartesianGrid strokeDasharray="3 3"/>
               <Tooltip/>

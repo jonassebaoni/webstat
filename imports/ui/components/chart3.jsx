@@ -31,7 +31,7 @@ class Chart3 extends React.Component {
                         <Label value="months" position="insideBottomRight" style={LabelStyle}/>
                     </XAxis>
                     <YAxis type="number" allowDecimals={false}>
-                        <Label angle={270} position='insideLeft' style={{ textAnchor: 'middle' }} value="number of tickets" style={LabelStyle}/>
+                        <Label angle={270} position='insideLeft' style={{ textAnchor: 'middle' }} value="tickets" style={LabelStyle}/>
                     </YAxis>
                     <CartesianGrid strokeDasharray="3 3"/>
                     <Tooltip/>
