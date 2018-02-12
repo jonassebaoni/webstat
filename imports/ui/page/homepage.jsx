@@ -1,8 +1,8 @@
 import React from 'react';
-import Chart1 from '../components/chart1.jsx';
-import Graph3 from '../components/graph2-3.jsx';
-import Graph4 from '../components/graph4.jsx';
-import Graph5 from '../components/graph5.jsx';
+import ChartGlobalTPA from '../components/chart_global_tpa.jsx';
+import WrapperTPM from '../components/wrapper_tpm.jsx';
+import WrapperTPW from '../components/wrapper_tpw.jsx';
+import WrapperTPD from '../components/wrapper_tpd.jsx';
 import {withTracker} from 'meteor/react-meteor-data';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Grid, Row, Col } from 'react-flexbox-grid';
@@ -29,21 +29,21 @@ class HomePage extends React.Component {
                         <Row>
                             <Col xs={6}>
                                 <h1> Number of tickets per attraction </h1>
-                                <Chart1 options={this.props.companies}/>
+                                <ChartGlobalTPA options={this.props.companies}/>
                             </Col>
                             <Col xs={6}>
                                 <h1> Evolution of tickets sold over the year </h1>
-                                <Graph3 options={this.props.companies}/>
+                                <WrapperTPM options={this.props.companies}/>
                             </Col>
                         </Row>
                         <Row>
                             <Col xs={6}>
                                 <h1>Evolution of tickets sold over the current week </h1>
-                                <Graph4 options={this.props.companies}/>
+                                <WrapperTPW options={this.props.companies}/>
                             </Col>
                             <Col xs={6}>
                                 <h1> Evolution of tickets sold over the day</h1>
-                                <Graph5 options={this.props.companies} />
+                                <WrapperTPD options={this.props.companies} />
                             </Col>
                         </Row>
                     </Grid>

@@ -10,7 +10,7 @@ const LabelStyle = {
     fontWeight: 'bold'
 };
 
-class Chart3 extends React.Component {
+class ChartBarTPM extends React.Component {
     render() {
         if (!this.props.ready) {
             return (
@@ -50,4 +50,4 @@ export default withTracker(({filter, yearSelected}) => {
         ticketsFiltered: TicketsMonthly.find().fetch(),
 
     };
-})(Chart3);
+})(ChartBarTPM);

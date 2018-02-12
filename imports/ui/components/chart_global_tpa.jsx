@@ -10,7 +10,7 @@ const LabelStyle = {
     fontWeight: 'bold'
 };
 
-class Chart1 extends React.Component {
+class ChartGlobalTPA extends React.Component {
 
     constructor(props) {
         super(props);
@@ -72,4 +72,4 @@ export default withTracker(() => {
       ticketsFiltered: TicketsAggregated.find({}).fetch(),
 
   };
-})(Chart1);
+})(ChartGlobalTPA);

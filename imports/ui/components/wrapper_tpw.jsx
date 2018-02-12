@@ -1,8 +1,8 @@
 import React from 'react';
 import Select from 'react-select';
-import Chart4 from './chart4.jsx';
+import ChartTPW from './chart_tpw.jsx';
 
-class Graph4 extends React.Component {
+class WrapperTPW extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -40,9 +40,9 @@ class Graph4 extends React.Component {
                     onChange={this.handleChange}
                     options={this.state.options}
                 />
-                <Chart4 filter={this.state.query} />
+                <ChartTPW filter={this.state.query} />
             </div>
         );
     }
 }
-export default Graph4;
+export default WrapperTPW;

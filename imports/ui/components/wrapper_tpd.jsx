@@ -1,10 +1,10 @@
 import React from 'react';
 import Select from 'react-select';
 import DatePicker from 'material-ui/DatePicker';
-import Chart5 from './chart5.jsx';
+import ChartTPD from './chart_tpd.jsx';
 
 
-class Graph5 extends React.Component {
+class WrapperTPD extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -60,9 +60,9 @@ class Graph5 extends React.Component {
                         options={this.state.options}
                     />
                 </div>
-                <Chart5 filter={this.state.query} date={this.state.controlledDate} />
+                <ChartTPD filter={this.state.query} date={this.state.controlledDate} />
             </div>
         );
     }
 }
-export default Graph5;
+export default WrapperTPD;

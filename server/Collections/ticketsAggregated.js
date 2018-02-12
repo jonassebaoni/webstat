@@ -54,7 +54,7 @@ Meteor.publish("ticketsMonthly", function (companySelected, yearSelected) {
         }], {clientCollection: "ticketsMonthly"});
 });
 
-// Groupe les tickets par semaine et par attraction sélectionnée
+// Groupe les tickets par jours de la semaine et par attraction sélectionnée
 Meteor.publish("ticketsWeekly", function (companySelected, yearSelected, weekSelected) {
     ReactiveAggregate(this, Tickets, [
         {
@@ -91,6 +91,7 @@ Meteor.publish("ticketsWeekly", function (companySelected, yearSelected, weekSel
         }], {clientCollection: "ticketsWeekly"});
 });
 
+// Groupe les tickets par heures de la journée et par attraction sélectionnée
 Meteor.publish("ticketsDaily", function (companySelected, date) {
     ReactiveAggregate(this, Tickets, [
         {

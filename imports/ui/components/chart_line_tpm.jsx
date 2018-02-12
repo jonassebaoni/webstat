@@ -1,17 +1,16 @@
 import React from 'react';
 import {withTracker} from 'meteor/react-meteor-data';
-import  { TicketsWeekly }  from '../../../imports/Collections/ticketsAggregated';
+import  { TicketsMonthly }  from '../../../imports/Collections/ticketsAggregated';
 import Recharts from "recharts";
 import moment from "moment";
 
-const {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Label, ResponsiveContainer} = Recharts;
+const {LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Label, ResponsiveContainer} = Recharts;
 const LabelStyle = {
     fontSize: '1em',
-    fontWeight: 'bold',
-    paddingTop: '20px',
+    fontWeight: 'bold'
 };
 
-class Chart4 extends React.Component {
+class ChartLineTPM extends React.Component {
     render() {
         if (!this.props.ready) {
             return (
@@ -26,10 +25,10 @@ class Chart4 extends React.Component {
         }
         return (
             <ResponsiveContainer aspect={16.0/9.0}>
-                <BarChart width={800} height={360} data={this.props.ticketsFiltered}
-                          margin={{top: 25, right: 30, left: 20, bottom: 25}}>
-                    <XAxis dataKey="_id"  name="days"  tickFormatter={(tick) => {return moment(tick, 'E').format('dddd');}}>
-                        <Label value="days" position="insideBottomRight" style={LabelStyle}/>
+                <LineChart data={this.props.ticketsFiltered}
+                           margin={{ top: 25, right: 30, left: 20, bottom: 25 }}>
+                    <XAxis dataKey="_id"  name="months"  tickFormatter={(tick) => {return moment(tick, 'MM').format('MMMM');}} >
+                        <Label value="months" position="insideBottomRight" style={LabelStyle}/>
                     </XAxis>
                     <YAxis type="number" allowDecimals={false}>
                         <Label angle={270} position='insideLeft' style={{ textAnchor: 'middle' }} value="tickets" style={LabelStyle}/>
@@ -37,18 +36,18 @@ class Chart4 extends React.Component {
                     <CartesianGrid strokeDasharray="3 3"/>
                     <Tooltip/>
                     <Legend/>
-                    <Bar dataKey="sum" fill="#e6e600" name="number of tickets"/>
-                </BarChart>
+                    <Line type="monotone" dataKey="sum" stroke="#ff0000" name="number of tickets"/>
+                </LineChart>
             </ResponsiveContainer>
         );
     }
 }
-export default withTracker(({filter}) => {
+export default withTracker(({filter, yearSelected}) => {
     // on recupere l'id de l'entreprise
-    const handle = Meteor.subscribe('ticketsWeekly', filter, new Date().getFullYear(), moment().week());
+    const handle = Meteor.subscribe('ticketsMonthly', filter, yearSelected);
     return {
         ready: handle.ready(),
-        ticketsFiltered: TicketsWeekly.find().fetch(),
+        ticketsFiltered: TicketsMonthly.find().fetch(),
 
     };
-})(Chart4);
+})(ChartLineTPM);

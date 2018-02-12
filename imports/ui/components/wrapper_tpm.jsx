@@ -1,8 +1,8 @@
 import React from 'react';
 import Select from 'react-select';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
-import Chart3 from './chart3.jsx';
-import Chart2 from './chart2.jsx';
+import ChartBarTPM from './chart_bar_tpm.jsx';
+import ChartLineTPM from './chart_line_tpm.jsx';
 
 const listYears = [
     {value: 2017, label: 2017},
@@ -13,7 +13,7 @@ const buttonStyle = {
     display: 'inline-block',
     marginLeft: 25,
 }
-class Graph3 extends React.Component {
+class WrapperTPM extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -65,10 +65,10 @@ class Graph3 extends React.Component {
         let chart = null;
 
         if(isBar)  {
-            chart = <Chart3 filter={this.state.query} yearSelected={this.state.yearSelected} />
+            chart = <ChartBarTPM filter={this.state.query} yearSelected={this.state.yearSelected} />
         }
         else {
-            chart = <Chart2 filter={this.state.query} yearSelected={this.state.yearSelected} />
+            chart = <ChartLineTPM filter={this.state.query} yearSelected={this.state.yearSelected} />
         }
 
         return (
@@ -106,4 +106,4 @@ class Graph3 extends React.Component {
         );
     }
 }
-export default Graph3;
+export default WrapperTPM;

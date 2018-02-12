@@ -11,7 +11,7 @@ const LabelStyle = {
     paddingTop: '20px',
 };
 
-class Chart5 extends React.Component {
+class ChartTPD extends React.Component {
     render() {
         if (!this.props.ready) {
             return (
@@ -54,4 +54,4 @@ export default withTracker(({filter, date}) => {
         ticketsFiltered: TicketsDaily.find().fetch(),
 
     };
-})(Chart5);
+})(ChartTPD);
