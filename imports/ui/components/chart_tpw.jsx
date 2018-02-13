@@ -26,7 +26,7 @@ class ChartTPW extends React.Component {
         }
         return (
             <ResponsiveContainer aspect={16.0/9.0}>
-                <BarChart width={800} height={360} data={this.props.ticketsFiltered}
+                <BarChart data={this.props.ticketsFiltered}
                           margin={{top: 25, right: 30, left: 20, bottom: 25}}>
                     <XAxis dataKey="_id"  name="days"  tickFormatter={(tick) => {return moment(tick, 'E').format('dddd');}}>
                         <Label value="days" position="insideBottomRight" style={LabelStyle}/>
@@ -37,7 +37,7 @@ class ChartTPW extends React.Component {
                     <CartesianGrid strokeDasharray="3 3"/>
                     <Tooltip/>
                     <Legend/>
-                    <Bar dataKey="sum" fill="#e6e600" name="number of tickets"/>
+                    <Bar dataKey="sum" fill="#f4c542" name="number of tickets"/>
                 </BarChart>
             </ResponsiveContainer>
         );

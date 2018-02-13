@@ -92,7 +92,7 @@ Meteor.publish("ticketsWeekly", function (companySelected, yearSelected, weekSel
 });
 
 // Groupe les tickets par heures de la journée et par attraction sélectionnée
-Meteor.publish("ticketsDaily", function (companySelected, date) {
+Meteor.publish("ticketsDaily", function (companySelected, date, range) {
     ReactiveAggregate(this, Tickets, [
         {
             $project: {
@@ -115,7 +115,7 @@ Meteor.publish("ticketsDaily", function (companySelected, date) {
 
         {
             $match: {
-                idCompany: companySelected, year: date["years"], month: date["months"]+1, day: date["date"]
+                idCompany: companySelected, year: date["years"], month: date["months"]+1, day: date["date"], hours: {$gte: range[0], $lte: range[1]},
             }
         },
         {
@@ -129,6 +129,17 @@ Meteor.publish("ticketsDaily", function (companySelected, date) {
                 _id: 1
             }
         }], {clientCollection: "ticketsDaily"});
+});
+
+//Groupe les tickets par conditions météo
+Meteor.publish("ticketsWeather", function () {
+    ReactiveAggregate(this, Tickets, [
+        {
+            $group: {
+                _id: "$skycode",
+                sum: {$sum: 1}
+            }
+        }], {clientCollection: "ticketsWeather"});
 });
 
 

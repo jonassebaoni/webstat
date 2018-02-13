@@ -7,7 +7,7 @@ const {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Label, Legend, Respo
 
 const LabelStyle = {
     fontSize: '1em',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
 };
 
 class ChartGlobalTPA extends React.Component {

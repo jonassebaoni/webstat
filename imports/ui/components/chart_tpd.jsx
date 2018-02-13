@@ -28,7 +28,7 @@ class ChartTPD extends React.Component {
             <ResponsiveContainer aspect={16.0/9.0}>
                 <LineChart  width={700} height={350} data={this.props.ticketsFiltered}
                            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                    <XAxis dataKey="_id" name="hours">
+                    <XAxis dataKey="_id" name="hours" unit="h">
                         <Label value="hours" position="insideBottomRight" style={LabelStyle}/>
                     </XAxis>
                     <YAxis type="number" allowDecimals={false}>
@@ -43,12 +43,10 @@ class ChartTPD extends React.Component {
         );
     }
 }
-export default withTracker(({filter, date}) => {
-    console.log("attraction sélectionnées: "+filter);
+export default withTracker(({filter, date, range}) => {
+    console.log(range)
     const dateObj = moment(date).toObject();
-
-    console.log("Date sélectionnée: "+"année: "+dateObj["years"]+" mois: "+dateObj["months"]+" jour: "+dateObj["date"])
-    const handle = Meteor.subscribe('ticketsDaily', filter, moment(date).toObject());
+    const handle = Meteor.subscribe('ticketsDaily', filter, dateObj, range);
     return {
         ready: handle.ready(),
         ticketsFiltered: TicketsDaily.find().fetch(),

@@ -1,5 +1,6 @@
 import React from 'react';
 import ChartGlobalTPA from '../components/chart_global_tpa.jsx';
+import ChartGlobalWeather from '../components/chart_global_weather.jsx';
 import WrapperTPM from '../components/wrapper_tpm.jsx';
 import WrapperTPW from '../components/wrapper_tpw.jsx';
 import WrapperTPD from '../components/wrapper_tpd.jsx';
@@ -32,15 +33,21 @@ class HomePage extends React.Component {
                                 <ChartGlobalTPA options={this.props.companies}/>
                             </Col>
                             <Col xs={6}>
-                                <h1> Evolution of tickets sold over the year </h1>
-                                <WrapperTPM options={this.props.companies}/>
+                                <h1> Affluence according to the weather </h1>
+                                <ChartGlobalWeather/>
                             </Col>
                         </Row>
                         <Row>
                             <Col xs={6}>
+                                <h1> Evolution of tickets sold over the year </h1>
+                                <WrapperTPM options={this.props.companies}/>
+                            </Col>
+                            <Col xs={6}>
                                 <h1>Evolution of tickets sold over the current week </h1>
                                 <WrapperTPW options={this.props.companies}/>
                             </Col>
+                        </Row>
+                        <Row>
                             <Col xs={6}>
                                 <h1> Evolution of tickets sold over the day</h1>
                                 <WrapperTPD options={this.props.companies} />
