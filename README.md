@@ -8,14 +8,15 @@ To install meteor :
 ```
 curl https://install.meteor.com | /bin/sh;
 ```
-To install SyncedCron for meteor :
+
+# Install dependencies
 ```
-meteor add percolate:synced-cron
+npm install
 ```
 
-# Install
-```
-npm install; meteor
+# Run 
+```bash
+npm start
 ```
 
 # Enjoy

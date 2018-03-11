@@ -5,7 +5,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { TicketsAggregated } from '../../../imports/Collections/ticketsAggregated';
 
 const {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Label, Legend, ResponsiveContainer,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Label, ResponsiveContainer,
 } = Recharts;
 
 const LabelStyle = {
@@ -47,12 +47,9 @@ class ChartGlobalTPA extends React.Component {
       );
     }
     return (
-      <ResponsiveContainer aspect={16.0 / 9.0}>
+      <ResponsiveContainer>
         <BarChart
           data={this.props.ticketsFiltered}
-          margin={{
- top: 25, right: 30, left: 20, bottom: 25,
-}}
         >
           <XAxis dataKey="_id" tickFormatter={this.tickFormatter} name="ID attraction" >
             <Label value="attraction name" position="bottom" style={LabelStyle} />
@@ -70,16 +67,16 @@ class ChartGlobalTPA extends React.Component {
 }
 
 ChartGlobalTPA.defaultProps = {
+  height: 250,
   ready: false,
 };
 
 ChartGlobalTPA.propTypes = {
+  height: PropTypes.number,
   ready: PropTypes.bool,
   ticketsFiltered: PropTypes.arrayOf(PropTypes.object).isRequired,
   options: PropTypes.arrayOf(PropTypes.object).isRequired,
-
 };
-
 
 export default withTracker(({yearSelected}) => {
   const handle = Meteor.subscribe('ticketsAggregated', yearSelected);

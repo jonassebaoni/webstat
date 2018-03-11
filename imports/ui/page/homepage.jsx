@@ -1,9 +1,9 @@
-import { Grid, Row, Col } from 'react-flexbox-grid';
+import { Col, Grid, Row } from 'react-flexbox-grid';
+import CircularProgress from 'material-ui/CircularProgress';
 import { withTracker } from 'meteor/react-meteor-data';
 import React from 'react';
 import PropTypes from 'prop-types';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import ToolBar from 'material-ui/Toolbar';
 import Companies from '../../Collections/companies';
 import WrapperGlobalTPA from '../components/wrapper_global_tpa.jsx';
 import ChartGlobalWeather from '../components/chart_global_weather.jsx';
@@ -11,46 +11,68 @@ import WrapperTPM from '../components/wrapper_tpm.jsx';
 import WrapperTPW from '../components/wrapper_tpw.jsx';
 import WrapperTPD from '../components/wrapper_tpd.jsx';
 
+
+const styles = {
+  row: {
+    marginBottom: 16
+  },
+  col4: {
+    display: 'flex',
+    height: '35vh'
+  },
+  col6: {
+    display: 'flex',
+    height: '45vh'
+  },
+  grid: {
+    spacing: 0
+  }
+};
+
 class HomePage extends React.Component {
   render() {
-    if (!this.props.ready) {
-      return <div>chargement</div>;
-    }
-
-
     return (
       <MuiThemeProvider>
-        <div className="layout">
-          <ToolBar title="My AppBar" />
-          <Grid fluid>
-            <Row>
-              <Col xs={6}>
-                <h1> Number of tickets per attraction </h1>
-                <WrapperGlobalTPA options={this.props.companies} />
-              </Col>
-              <Col xs={6}>
-                <h1> Affluence according to the weather </h1>
-                <ChartGlobalWeather />
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={6}>
-                <h1> Evolution of tickets sold over the year </h1>
-                <WrapperTPM options={this.props.companies} />
-              </Col>
-              <Col xs={6}>
-                <h1>Evolution of tickets sold over the current week </h1>
-                <WrapperTPW options={this.props.companies} />
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={6}>
-                <h1> Evolution of tickets sold over the day</h1>
-                <WrapperTPD options={this.props.companies} />
-              </Col>
-            </Row>
-          </Grid>
-        </div>
+        {this.props.ready ?
+          <div id="homePage">
+            <h1>Parc analysis</h1>
+
+            <Grid fluid spacing={styles.grid.spacing}>
+              <Row style={styles.row}>
+                <Col xs={4} style={styles.col4}>
+                  <WrapperGlobalTPA options={this.props.companies} />
+                </Col>
+                <Col xs={4} style={styles.col4}>
+                  <ChartGlobalWeather />
+                </Col>
+                <Col xs={4} style={styles.col4}>
+                  <div className="graphContainer">
+                    <h2> Evolution of tickets sold over the year </h2>
+                    <WrapperTPM options={this.props.companies} />
+                  </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={6} style={styles.col4}>
+                  <div className="graphContainer">
+                    <h2> Evolution of tickets sold over the current week </h2>
+                    <WrapperTPW options={this.props.companies} />
+                  </div>
+                </Col>
+                <Col xs={6} style={styles.col4}>
+                  <div className="graphContainer">
+                    <h2> Evolution of tickets sold over the day </h2>
+                    <WrapperTPD options={this.props.companies} />
+                  </div>
+                </Col>
+              </Row>
+            </Grid>
+          </div>
+          :
+          <div className="loader">
+            <CircularProgress size={80} thickness={6}/>
+          </div>
+        }
       </MuiThemeProvider>
     );
   }

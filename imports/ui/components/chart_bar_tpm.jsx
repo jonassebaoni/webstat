@@ -26,26 +26,19 @@ class ChartBarTPM extends React.Component {
       );
     }
     return (
-      <ResponsiveContainer aspect={16.0 / 9.0}>
-        <BarChart
-          width={800}
-          height={360}
-          data={this.props.ticketsFiltered}
-          margin={{
- top: 25, right: 30, left: 20, bottom: 25,
-}}
-        >
-          <XAxis dataKey="_id" name="months" tickFormatter={tick => moment(tick, 'MM').format('MMMM')}>
-            <Label value="months" position="bottom" style={LabelStyle} />
-          </XAxis>
-          <YAxis type="number" allowDecimals={false}>
-            <Label angle={270} position="left" style={{ textAnchor: 'middle' }} value="tickets" style={LabelStyle} />
-          </YAxis>
-          <CartesianGrid strokeDasharray="3 3" />
-          <Tooltip labelFormatter={month => moment(month, 'MM').format('MMMM')} />
-          <Bar dataKey="sum" fill="#009933" name="number of tickets" />
-        </BarChart>
-      </ResponsiveContainer>
+      <BarChart
+        data={this.props.ticketsFiltered}
+      >
+        <XAxis dataKey="_id" name="months" tickFormatter={tick => moment(tick, 'MM').format('MMMM')}>
+          <Label value="months" position="bottom" style={LabelStyle} />
+        </XAxis>
+        <YAxis type="number" allowDecimals={false}>
+          <Label angle={270} position="left" value="tickets" style={LabelStyle} />
+        </YAxis>
+        <CartesianGrid strokeDasharray="3 3" />
+        <Tooltip labelFormatter={month => moment(month, 'MM').format('MMMM')} />
+        <Bar dataKey="sum" fill="#009933" name="number of tickets" />
+      </BarChart>
     );
   }
 }

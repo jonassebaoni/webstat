@@ -1,7 +1,6 @@
 import React from 'react';
 import Recharts from 'recharts';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import { withTracker } from 'meteor/react-meteor-data';
 import { TicketsWeather } from '../../../imports/Collections/ticketsAggregated';
 
@@ -15,8 +14,8 @@ const LabelStyle = {
 };
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({
-  cx, cy, midAngle, innerRadius, outerRadius, percent,
-}) => {
+                                 cx, cy, midAngle, innerRadius, outerRadius, percent,
+                               }) => {
   const radius = innerRadius + ((outerRadius - innerRadius) * 0.5);
   const x = cx + (radius * Math.cos(-midAngle * RADIAN));
   const y = cy + (radius * Math.sin(-midAngle * RADIAN));
@@ -103,47 +102,51 @@ class ChartGlobalWeather extends React.Component {
 
 
   render() {
-    if (!this.props.ready) {
-      return (
-        <div>chargement</div>
-      );
-    }
-    // si pas de ticket dans la base
-    if (this.props.ticketsFiltered === []) {
-      return (
-        <div>pas de ticket disponible</div>
-      );
-    }
     return (
-      <ResponsiveContainer aspect={16.0 / 9.0}>
-        <PieChart>
-          <Pie
-            data={this.props.ticketsFiltered}
-            nameKey="_id"
-            dataKey="sum"
-            fill="#82ca9d"
-            labelLine={false}
-            label={renderCustomizedLabel}
-          >
-            {
-              this.props.ticketsFiltered
-                  .map((entry, index) =>
-                    <Cell key={index} fill={COLORS[index % COLORS.length]} />)
-                        }
-            <LabelList dataKey="_id" position="outside" style={LabelStyle} formatter={this.getSkyName} />
-          </Pie>
-          <Tooltip />
-        </PieChart>
-      </ResponsiveContainer>
+      <div className="graphContainer">
+        <h2> Affluence according to the weather </h2>
+        {!this.props.ready ?
+          <div>Chargement</div>
+          :
+          this.props.tic === [] ?
+            // Si pas de ticket dans la base
+            <div>Pas de ticket disponible</div>
+            :
+            <div className="graph">
+              <ResponsiveContainer height={this.props.height}>
+                <PieChart>
+                  <Pie
+                    data={this.props.ticketsFiltered}
+                    nameKey="_id"
+                    dataKey="sum"
+                    fill="#82ca9d"
+                    labelLine={false}
+                    label={renderCustomizedLabel}
+                  >
+                    {
+                      this.props.ticketsFiltered
+                        .map((entry, index) =>
+                          <Cell key={index} fill={COLORS[index % COLORS.length]} />)
+                    }
+                    <LabelList dataKey="_id" position="outside" style={LabelStyle} formatter={this.getSkyName} />
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+        }
+      </div>
     );
   }
 }
 
 ChartGlobalWeather.defaultProps = {
+  height: 250,
   ready: false,
 };
 
 ChartGlobalWeather.propTypes = {
+  height: PropTypes.number,
   ready: PropTypes.bool,
   ticketsFiltered: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
@@ -153,6 +156,5 @@ export default withTracker(() => {
   return {
     ready: handle.ready(),
     ticketsFiltered: TicketsWeather.find({}).fetch(),
-
   };
 })(ChartGlobalWeather);

@@ -44,7 +44,6 @@ class WrapperTPD extends React.Component {
   }
 
   handleDateSelected(event, date) {
-    console.log(date);
     this.setState({
       controlledDate: date,
     });

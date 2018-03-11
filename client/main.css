@@ -1,8 +1,22 @@
-/* CSS declarations go here */
-body {
+html, body, #react-root {
+    width: 100%;
+    height: 100%;
     margin: 0;
+    padding: 0;
+}
+
+body {
     font-family: 'Roboto', sans-serif;
 }
+
+#content {
+    width: 100%;
+    height: 100%;
+    background-color: #EAEAEA;
+    display: flex;
+    overflow: auto;
+}
+
 #container {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -12,18 +26,54 @@ body {
     height: 800px;
     background-color: #fff;
 }
+
 h1 {
     text-align: center;
 }
 
+/*************
+*  SELECT INPUT
+**************/
 .Select {
     display: inline-block;
     width: 150px;
-    margin-left: 60px;
     margin-bottom: 10px;
-
 }
 
-.col-xs-6 {
-    border: ridge;
+.Select-control {
+    border-radius: 0 !important;
+}
+
+/*************
+*  HOMEPAGE
+**************/
+#homePage {
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+#homePage h2 {
+    margin: 0 0 5px 0;
+    font-size: 1.2em;
+    font-weight: normal;
+}
+
+#homePage .graphContainer {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 18px;
+    width: 100%;
+    overflow: auto;
+}
+
+#homePage .graph {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.loader {
+    margin: auto
 }

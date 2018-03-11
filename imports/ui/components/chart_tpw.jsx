@@ -27,24 +27,22 @@ class ChartTPW extends React.Component {
       );
     }
     return (
-      <ResponsiveContainer aspect={16.0 / 9.0}>
-        <BarChart
-          data={this.props.ticketsFiltered}
-          margin={{
- top: 25, right: 30, left: 20, bottom: 25,
-}}
-        >
-          <XAxis dataKey="_id" name="days" tickFormatter={tick => moment(tick, 'E').format('dddd')}>
-            <Label value="days" position="bottom" style={LabelStyle} />
-          </XAxis>
-          <YAxis type="number" allowDecimals={false}>
-            <Label angle={270} position="left" style={{ textAnchor: 'middle' }} value="tickets" style={LabelStyle} />
-          </YAxis>
-          <CartesianGrid strokeDasharray="3 3" />
-          <Tooltip labelFormatter={day => moment(day, 'E').format('dddd')}/>
-          <Bar dataKey="sum" fill="#f4c542" name="number of tickets" />
-        </BarChart>
-      </ResponsiveContainer>
+      <BarChart
+        data={this.props.ticketsFiltered}
+        margin={{
+          top: 25, right: 30, left: 20, bottom: 25,
+        }}
+      >
+        <XAxis dataKey="_id" name="days" tickFormatter={tick => moment(tick, 'E').format('dddd')}>
+          <Label value="days" position="bottom" style={LabelStyle} />
+        </XAxis>
+        <YAxis type="number" allowDecimals={false}>
+          <Label angle={270} position="left" style={{ textAnchor: 'middle' }} value="tickets" style={LabelStyle} />
+        </YAxis>
+        <CartesianGrid strokeDasharray="3 3" />
+        <Tooltip labelFormatter={day => moment(day, 'E').format('dddd')}/>
+        <Bar dataKey="sum" fill="#f4c542" name="number of tickets" />
+      </BarChart>
     );
   }
 }
