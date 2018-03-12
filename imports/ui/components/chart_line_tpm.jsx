@@ -5,7 +5,7 @@ import Recharts from 'recharts';
 import moment from 'moment';
 
 const {
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Label, ResponsiveContainer,
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Label, ResponsiveContainer,
 } = Recharts;
 const LabelStyle = {
   fontSize: '1em',
@@ -15,9 +15,7 @@ const LabelStyle = {
 class ChartLineTPM extends React.Component {
   render() {
     if (!this.props.ready) {
-      return (
-        <div>chargement</div>
-      );
+      return null;
     }
     // si pas de ticket dans la base
     if (this.props.ticketsFiltered === []) {
@@ -26,19 +24,22 @@ class ChartLineTPM extends React.Component {
       );
     }
     return (
-      <LineChart
-        data={this.props.ticketsFiltered}
-      >
-        <XAxis dataKey="_id" name="months" tickFormatter={tick => moment(tick, 'MM').format('MMMM')} >
-          <Label value="months" position="bottom" style={LabelStyle} />
-        </XAxis>
-        <YAxis type="number" allowDecimals={false}>
-          <Label angle={270} position="left" style={{ textAnchor: 'middle' }} value="tickets" style={LabelStyle} />
-        </YAxis>
-        <CartesianGrid strokeDasharray="3 3" />
-        <Tooltip labelFormatter={month => moment(month, 'MM').format('MMMM')} />
-        <Line type="monotone" dataKey="sum" stroke="#ff0000" name="number of tickets" />
-      </LineChart>
+      <ResponsiveContainer>
+        <LineChart
+          data={this.props.ticketsFiltered}
+          margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
+        >
+          <XAxis dataKey="_id" name="months" tickFormatter={tick => moment(tick, 'MM').format('MMMM')} >
+            <Label value="months" position="bottom" style={LabelStyle} />
+          </XAxis>
+          <YAxis type="number" allowDecimals={false}>
+            <Label angle={270} position="left" style={{ textAnchor: 'middle' }} value="tickets" style={LabelStyle} />
+          </YAxis>
+          <CartesianGrid strokeDasharray="3 3" />
+          <Tooltip labelFormatter={month => moment(month, 'MM').format('MMMM')} />
+          <Line type="monotone" dataKey="sum" stroke="#ff0000" name="number of tickets" />
+        </LineChart>
+      </ResponsiveContainer>
     );
   }
 }

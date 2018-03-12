@@ -12,6 +12,7 @@ const LabelStyle = {
   fontSize: '1em',
   fontWeight: 'bold',
   textAnchor: 'middle',
+  height: 15,
 };
 
 class ChartGlobalTPA extends React.Component {
@@ -36,9 +37,7 @@ class ChartGlobalTPA extends React.Component {
 
   render() {
     if (!this.props.ready) {
-      return (
-        <div>chargement</div>
-      );
+      return null;
     }
     // si pas de ticket dans la base
     if (this.props.ticketsFiltered === []) {
@@ -50,6 +49,7 @@ class ChartGlobalTPA extends React.Component {
       <ResponsiveContainer>
         <BarChart
           data={this.props.ticketsFiltered}
+          margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
         >
           <XAxis dataKey="_id" tickFormatter={this.tickFormatter} name="ID attraction" >
             <Label value="attraction name" position="bottom" style={LabelStyle} />

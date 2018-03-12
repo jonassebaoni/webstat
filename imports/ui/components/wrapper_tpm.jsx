@@ -4,15 +4,23 @@ import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import ChartBarTPM from './chart_bar_tpm.jsx';
 import ChartLineTPM from './chart_line_tpm.jsx';
 
+
 const listYears = [
   { value: 2017, label: 2017 },
   { value: 2018, label: 2018 },
 ];
-
-const buttonStyle = {
-  display: 'inline-block',
-  marginLeft: 25,
+const styles = {
+  button: {
+    display: 'inline-block',
+    marginLeft: 25,
+  },
+  radioGroup: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginTop: 6,
+  },
 };
+
 class WrapperTPM extends React.Component {
   constructor(props) {
     super(props);
@@ -30,10 +38,7 @@ class WrapperTPM extends React.Component {
 
   componentWillMount() {
     // on recupere les entreprises depuis le parent et on l'injecte dans le state
-    const options = [];
-    this.props.options.map((company) => {
-      return options.push({ value: company._id, label: company.name });
-    });
+    const options = this.props.options.map((company) => ({ value: company._id, label: company.name }));
     this.setState({
       options,
       query: options[0].value, // valeur par defaut (Sudri'Cub)
@@ -71,8 +76,9 @@ class WrapperTPM extends React.Component {
     }
 
     return (
-      <div>
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
+      <div className="graphContainer">
+        <h2> Evolution of tickets sold over the year </h2>
+        <div className="graphInputContainer">
           <Select
             name="year selected"
             value={this.state.yearSelected}
@@ -87,24 +93,32 @@ class WrapperTPM extends React.Component {
             options={this.state.options}
             clearable={false}
           />
-          <RadioButtonGroup name="select chart style" defaultSelected="line" style={{ display: 'flex', flexDirection: 'row' }}>
+          <RadioButtonGroup
+            name="select chart style"
+            defaultSelected="line"
+            style={styles.radioGroup}
+          >
             <RadioButton
               value="line"
               label="Line"
               onClick={this.handleLineClick}
-              style={buttonStyle}
+              style={styles.button}
             />
             <RadioButton
               value="bar"
               label="Bar"
               onClick={this.handleBarClick}
-              style={buttonStyle}
+              style={styles.button}
             />
           </RadioButtonGroup>
         </div>
-        {chart}
+
+        <div className="graph">
+          {chart}
+        </div>
       </div>
     );
   }
 }
+
 export default WrapperTPM;

@@ -5,7 +5,7 @@ import Recharts from 'recharts';
 import moment from 'moment';
 
 const {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Label, ResponsiveContainer,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Label, ResponsiveContainer,
 } = Recharts;
 const LabelStyle = {
   fontSize: '1em',
@@ -15,9 +15,7 @@ const LabelStyle = {
 class ChartBarTPM extends React.Component {
   render() {
     if (!this.props.ready) {
-      return (
-        <div>chargement</div>
-      );
+      return null;
     }
     // si pas de ticket dans la base
     if (this.props.ticketsFiltered === []) {
@@ -26,19 +24,22 @@ class ChartBarTPM extends React.Component {
       );
     }
     return (
-      <BarChart
-        data={this.props.ticketsFiltered}
-      >
-        <XAxis dataKey="_id" name="months" tickFormatter={tick => moment(tick, 'MM').format('MMMM')}>
-          <Label value="months" position="bottom" style={LabelStyle} />
-        </XAxis>
-        <YAxis type="number" allowDecimals={false}>
-          <Label angle={270} position="left" value="tickets" style={LabelStyle} />
-        </YAxis>
-        <CartesianGrid strokeDasharray="3 3" />
-        <Tooltip labelFormatter={month => moment(month, 'MM').format('MMMM')} />
-        <Bar dataKey="sum" fill="#009933" name="number of tickets" />
-      </BarChart>
+      <ResponsiveContainer>
+        <BarChart
+          data={this.props.ticketsFiltered}
+          margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
+        >
+          <XAxis dataKey="_id" name="months" tickFormatter={tick => moment(tick, 'MM').format('MMMM')}>
+            <Label value="months" position="bottom" style={LabelStyle} />
+          </XAxis>
+          <YAxis type="number" allowDecimals={false}>
+            <Label angle={270} position="left" value="tickets" style={LabelStyle} />
+          </YAxis>
+          <CartesianGrid strokeDasharray="3 3" />
+          <Tooltip labelFormatter={month => moment(month, 'MM').format('MMMM')} />
+          <Bar dataKey="sum" fill="#009933" name="number of tickets" />
+        </BarChart>
+      </ResponsiveContainer>
     );
   }
 }

@@ -5,8 +5,20 @@ import Slider from 'rc-slider';
 import ChartTPD from './chart_tpd.jsx';
 import DateRange from 'material-ui-icons/DateRange';
 
+
 const { createSliderWithTooltip } = Slider;
 const Range = createSliderWithTooltip(Slider.Range);
+const styles = {
+  dataRangeIcon: {
+    width: 30,
+    height: 30,
+    marginTop: 8
+  },
+  datePicker: {
+    marginLeft: 10,
+    marginRight: 10
+  }
+};
 
 class WrapperTPD extends React.Component {
   constructor(props) {
@@ -24,13 +36,11 @@ class WrapperTPD extends React.Component {
 
   componentWillMount() {
     // on recupere les entreprises depuis le parent et on l'injecte dans le state
-    const options = [];
-    this.props.options.map((company) => {
-      options.push({ value: company._id, label: company.name });
-    });
+    const options = this.props.options.map((company) => ({ value: company._id, label: company.name }));
+
     this.setState({
       options,
-      query: options[0].value, // valeur par defaut (Sudri'Cub)
+      query: options[2].value, // valeur par defaut (EcoLejour)
     });
   }
 
@@ -55,40 +65,41 @@ class WrapperTPD extends React.Component {
 
   render() {
     return (
-      <div>
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
-          <DateRange style={{ marginLeft: '60px', margiBottom: '10px', marginTop: '10px', width: 40, height: 40 }} />
+      <div className="graphContainer">
+        <h2> Evolution of tickets sold over the day </h2>
+        <div className="graphInputContainer">
+          <DateRange style={styles.dataRangeIcon} />
           <DatePicker
             hintText="Date Input"
             value={this.state.controlledDate}
             onChange={this.handleDateSelected}
-            style={{ marginLeft: '10px', paddingBottom: '10px' }}
+            style={styles.datePicker}
           />
           <Select
             name="year selected"
+            className="selectTdp"
             value={this.state.query}
             onChange={this.handleCompanySelected}
             options={this.state.options}
             clearable={false}
           />
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
           <Range
+            className="slider"
             defaultValue={this.state.rangeValue}
             allowCross={false}
-            style={{
- width: '350px', marginLeft: '80px', marginBottom: '15px', marginTop: '10px',
-}}
             max={23}
             onChange={this.handleRangeSelected}
             tipFormatter={value => `${value}h`}
           />
         </div>
-        <ChartTPD
-          filter={this.state.query}
-          date={this.state.controlledDate}
-          range={this.state.rangeValue}
-        />
+
+        <div className="graph">
+          <ChartTPD
+            filter={this.state.query}
+            date={this.state.controlledDate}
+            range={this.state.rangeValue}
+          />
+        </div>
       </div>
     );
   }

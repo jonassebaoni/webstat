@@ -18,15 +18,15 @@ const styles = {
   },
   col4: {
     display: 'flex',
-    height: '35vh'
+    height: '35vh',
   },
   col6: {
     display: 'flex',
-    height: '45vh'
+    height: '45vh',
   },
   grid: {
-    spacing: 0
-  }
+    spacing: 0,
+  },
 };
 
 class HomePage extends React.Component {
@@ -46,24 +46,15 @@ class HomePage extends React.Component {
                   <ChartGlobalWeather />
                 </Col>
                 <Col xs={4} style={styles.col4}>
-                  <div className="graphContainer">
-                    <h2> Evolution of tickets sold over the year </h2>
-                    <WrapperTPM options={this.props.companies} />
-                  </div>
+                  <WrapperTPM options={this.props.companies} />
                 </Col>
               </Row>
               <Row>
-                <Col xs={6} style={styles.col4}>
-                  <div className="graphContainer">
-                    <h2> Evolution of tickets sold over the current week </h2>
-                    <WrapperTPW options={this.props.companies} />
-                  </div>
+                <Col xs={6} style={styles.col6}>
+                  <WrapperTPW options={this.props.companies} />
                 </Col>
-                <Col xs={6} style={styles.col4}>
-                  <div className="graphContainer">
-                    <h2> Evolution of tickets sold over the day </h2>
-                    <WrapperTPD options={this.props.companies} />
-                  </div>
+                <Col xs={6} style={styles.col6}>
+                  <WrapperTPD options={this.props.companies} />
                 </Col>
               </Row>
             </Grid>

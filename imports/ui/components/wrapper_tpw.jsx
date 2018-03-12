@@ -13,13 +13,11 @@ class WrapperTPW extends React.Component {
   }
   componentWillMount() {
     // on recupere les entreprises depuis le parent et on l'injecte dans le state
-    const options = [];
-    this.props.options.map((company) => {
-      options.push({ value: company._id, label: company.name });
-    });
+    const options = this.props.options.map((company) => ({ value: company._id, label: company.name }));
+
     this.setState({
       options,
-      query: options[0].value, // valeur par defaut (Sudri'Cub)
+      query: options[2].value, // valeur par defaut (EcoLejour)
     });
   }
 
@@ -33,7 +31,8 @@ class WrapperTPW extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="graphContainer">
+        <h2> Evolution of tickets sold over the current week </h2>
         <Select
           name="id selected"
           value={this.state.query}

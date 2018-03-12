@@ -106,14 +106,14 @@ class ChartGlobalWeather extends React.Component {
       <div className="graphContainer">
         <h2> Affluence according to the weather </h2>
         {!this.props.ready ?
-          <div>Chargement</div>
+          null
           :
           this.props.tic === [] ?
             // Si pas de ticket dans la base
             <div>Pas de ticket disponible</div>
             :
             <div className="graph">
-              <ResponsiveContainer height={this.props.height}>
+              <ResponsiveContainer>
                 <PieChart>
                   <Pie
                     data={this.props.ticketsFiltered}
@@ -141,12 +141,10 @@ class ChartGlobalWeather extends React.Component {
 }
 
 ChartGlobalWeather.defaultProps = {
-  height: 250,
   ready: false,
 };
 
 ChartGlobalWeather.propTypes = {
-  height: PropTypes.number,
   ready: PropTypes.bool,
   ticketsFiltered: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
