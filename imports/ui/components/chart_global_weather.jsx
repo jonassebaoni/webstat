@@ -7,12 +7,16 @@ import { TicketsWeather } from '../../../imports/Collections/ticketsAggregated';
 const {
   PieChart, Pie, Tooltip, ResponsiveContainer, Cell, LabelList,
 } = Recharts;
+
+
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#bf42f4', '#f44242', '#42f448'];
-const LabelStyle = {
-  fontSize: '1em',
-  fontWeight: 'bold',
-};
 const RADIAN = Math.PI / 180;
+const styles = {
+  label: {
+    fontSize: '1em',
+    fontWeight: 'bold',
+  },
+};
 const renderCustomizedLabel = ({
                                  cx, cy, midAngle, innerRadius, outerRadius, percent,
                                }) => {
@@ -100,7 +104,6 @@ class ChartGlobalWeather extends React.Component {
     return 'N/A';
   }
 
-
   render() {
     return (
       <div className="graphContainer">
@@ -108,7 +111,7 @@ class ChartGlobalWeather extends React.Component {
         {!this.props.ready ?
           null
           :
-          this.props.tic === [] ?
+          this.props.ticketsFiltered === [] ?
             // Si pas de ticket dans la base
             <div>Pas de ticket disponible</div>
             :
@@ -128,7 +131,7 @@ class ChartGlobalWeather extends React.Component {
                         .map((entry, index) =>
                           <Cell key={index} fill={COLORS[index % COLORS.length]} />)
                     }
-                    <LabelList dataKey="_id" position="outside" style={LabelStyle} formatter={this.getSkyName} />
+                    <LabelList dataKey="_id" position="outside" style={styles.label} formatter={this.getSkyName} />
                   </Pie>
                   <Tooltip />
                 </PieChart>
@@ -143,12 +146,10 @@ class ChartGlobalWeather extends React.Component {
 ChartGlobalWeather.defaultProps = {
   ready: false,
 };
-
 ChartGlobalWeather.propTypes = {
   ready: PropTypes.bool,
   ticketsFiltered: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
-
 export default withTracker(() => {
   const handle = Meteor.subscribe('ticketsWeather');
   return {

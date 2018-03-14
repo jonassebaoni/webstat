@@ -1,6 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default class AppLayout extends React.Component {
+
+class AppLayout extends React.PureComponent {
   render() {
     return (
       <div id="content">
@@ -9,3 +11,8 @@ export default class AppLayout extends React.Component {
     );
   }
 }
+
+AppLayout.propTypes = {
+  content: PropTypes.object.isRequired,
+};
+export default AppLayout;

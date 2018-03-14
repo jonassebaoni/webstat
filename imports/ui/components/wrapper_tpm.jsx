@@ -1,16 +1,15 @@
 import React from 'react';
-import Select from 'react-select';
+import PropTypes from 'prop-types';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import ChartBarTPM from './chart_bar_tpm.jsx';
 import ChartLineTPM from './chart_line_tpm.jsx';
 
 
-const listYears = [
-  { value: 2017, label: 2017 },
-  { value: 2018, label: 2018 },
-];
 const styles = {
-  button: {
+  firstButton: {
+    display: 'inline-block',
+  },
+  secondButton: {
     display: 'inline-block',
     marginLeft: 25,
   },
@@ -25,36 +24,10 @@ class WrapperTPM extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      query: '',
-      options: [],
-      yearSelected: new Date().getFullYear(),
       isBar: false,
     };
-    this.handleCompanySelected = this.handleCompanySelected.bind(this);
-    this.handleYearSelected = this.handleYearSelected.bind(this);
     this.handleLineClick = this.handleLineClick.bind(this);
     this.handleBarClick = this.handleBarClick.bind(this);
-  }
-
-  componentWillMount() {
-    // on recupere les entreprises depuis le parent et on l'injecte dans le state
-    const options = this.props.options.map((company) => ({ value: company._id, label: company.name }));
-    this.setState({
-      options,
-      query: options[0].value, // valeur par defaut (Sudri'Cub)
-    });
-  }
-
-  componentDidMount() {
-    require('react-select/dist/react-select.css');
-  }
-
-  handleCompanySelected(selectedOption) {
-    this.setState({ query: selectedOption.value });
-  }
-
-  handleYearSelected(selectedOption) {
-    this.setState({ yearSelected: selectedOption.value });
   }
 
   handleBarClick() {
@@ -70,29 +43,25 @@ class WrapperTPM extends React.Component {
     let chart = null;
 
     if (isBar) {
-      chart = <ChartBarTPM filter={this.state.query} yearSelected={this.state.yearSelected} />;
+      chart = (
+        <ChartBarTPM
+          filter={this.props.selectedCompany}
+          yearSelected={this.props.selectedYear}
+        />
+      );
     } else {
-      chart = <ChartLineTPM filter={this.state.query} yearSelected={this.state.yearSelected} />;
+      chart = (
+        <ChartLineTPM
+          filter={this.props.selectedCompany}
+          yearSelected={this.props.selectedYear}
+        />
+      );
     }
 
     return (
       <div className="graphContainer">
         <h2> Evolution of tickets sold over the year </h2>
         <div className="graphInputContainer">
-          <Select
-            name="year selected"
-            value={this.state.yearSelected}
-            onChange={this.handleYearSelected}
-            options={listYears}
-            clearable={false}
-          />
-          <Select
-            name="id selected"
-            value={this.state.query}
-            onChange={this.handleCompanySelected}
-            options={this.state.options}
-            clearable={false}
-          />
           <RadioButtonGroup
             name="select chart style"
             defaultSelected="line"
@@ -102,13 +71,13 @@ class WrapperTPM extends React.Component {
               value="line"
               label="Line"
               onClick={this.handleLineClick}
-              style={styles.button}
+              style={styles.firstButton}
             />
             <RadioButton
               value="bar"
               label="Bar"
               onClick={this.handleBarClick}
-              style={styles.button}
+              style={styles.secondButton}
             />
           </RadioButtonGroup>
         </div>
@@ -121,4 +90,9 @@ class WrapperTPM extends React.Component {
   }
 }
 
+WrapperTPM.propTypes = {
+  selectedYear: PropTypes.number.isRequired,
+  options: PropTypes.arrayOf(PropTypes.object).isRequired,
+  selectedCompany: PropTypes.string.isRequired,
+};
 export default WrapperTPM;

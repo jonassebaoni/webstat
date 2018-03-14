@@ -8,11 +8,14 @@ const {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Label, ResponsiveContainer,
 } = Recharts;
 
-const LabelStyle = {
-  fontSize: '1em',
-  fontWeight: 'bold',
-  textAnchor: 'middle',
-  height: 15,
+
+const styles = {
+  label: {
+    fontSize: '0.75em',
+    fontWeight: 'bold',
+    textAnchor: 'middle',
+    height: 15,
+  },
 };
 
 class ChartGlobalTPA extends React.Component {
@@ -26,7 +29,7 @@ class ChartGlobalTPA extends React.Component {
   */
   tickFormatter(tick) {
     let companyName = '';
-    for (let i = 0; i < this.props.options.length; i += 1) {
+    for (let i = 0; i < this.props.options.length; i++) {
       if (tick === this.props.options[i]._id) {
         companyName = this.props.options[i].name;
         break;
@@ -45,20 +48,23 @@ class ChartGlobalTPA extends React.Component {
         <div>pas de ticket disponible</div>
       );
     }
+
     return (
       <ResponsiveContainer>
         <BarChart
           data={this.props.ticketsFiltered}
-          margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
+          margin={{
+            top: 5, right: 20, left: 10, bottom: 5,
+          }}
         >
           <XAxis dataKey="_id" tickFormatter={this.tickFormatter} name="ID attraction" >
-            <Label value="attraction name" position="bottom" style={LabelStyle} />
+            <Label value="attraction name" position="bottom" style={styles.label} />
           </XAxis>
           <YAxis type="number" allowDecimals={false}>
-            <Label angle={270} position="left" value="total tickets" style={LabelStyle} />
+            <Label angle={270} position="left" value="total tickets" style={styles.label} />
           </YAxis>
           <CartesianGrid strokeDasharray="3 3" />
-          <Tooltip labelFormatter={this.tickFormatter}/>
+          <Tooltip labelFormatter={this.tickFormatter} />
           <Bar dataKey="sum" fill="#8884d8" name="number of tickets" />
         </BarChart>
       </ResponsiveContainer>
@@ -67,19 +73,17 @@ class ChartGlobalTPA extends React.Component {
 }
 
 ChartGlobalTPA.defaultProps = {
-  height: 250,
   ready: false,
 };
 
 ChartGlobalTPA.propTypes = {
-  height: PropTypes.number,
   ready: PropTypes.bool,
   ticketsFiltered: PropTypes.arrayOf(PropTypes.object).isRequired,
   options: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-export default withTracker(({yearSelected}) => {
-  const handle = Meteor.subscribe('ticketsAggregated', yearSelected);
+export default withTracker(({ selectedYear }) => {
+  const handle = Meteor.subscribe('ticketsAggregated', selectedYear);
   return {
     ready: handle.ready(),
     ticketsFiltered: TicketsAggregated.find({}).fetch(),

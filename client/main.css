@@ -37,11 +37,12 @@ h1 {
 .Select {
     display: inline-block;
     width: 150px;
-    margin: 0 5px 10px 5px;
+    margin: 4px 5px 10px 5px;
 }
 
 .Select-control {
     border-radius: 0 !important;
+    background-color: transparent !important;
 }
 
 /*************
@@ -78,6 +79,7 @@ h1 {
     display: flex;
     flex-direction: row;
     margin-bottom: 10px;
+    justify-content: center;
 }
 
 #homePage .selectTdp {
@@ -86,8 +88,15 @@ h1 {
 
 #homePage .slider {
     width: 170px;
-    margin-top: 12px;
+    margin-top: 17px;
     margin-left: 5px;
+}
+
+#configurationBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 2px;
 }
 
 .loader {

@@ -156,4 +156,3 @@ Meteor.publish('ticketsWeather', function () {
       },
     }], { clientCollection: 'ticketsWeather' });
 });
-
