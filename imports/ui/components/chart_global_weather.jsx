@@ -2,7 +2,7 @@ import React from 'react';
 import Recharts from 'recharts';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
-import { TicketsWeather } from '../../../imports/Collections/ticketsAggregated';
+import { TicketsWeather } from '../../collections/ticketsAggregated';
 
 const {
   PieChart, Pie, Tooltip, ResponsiveContainer, Cell, LabelList,

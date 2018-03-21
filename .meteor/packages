@@ -26,3 +26,5 @@ percolate:synced-cron
 bensventures:flow-router-ssr
 meteorhacks:aggregate
 jcbernack:reactive-aggregate
+nimble:restivus
+apinf:restivus-swagger

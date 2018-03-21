@@ -2,7 +2,7 @@ import React from 'react';
 import Recharts from 'recharts';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
-import { TicketsAggregated } from '../../../imports/Collections/ticketsAggregated';
+import { TicketsAggregated } from '../../collections/ticketsAggregated';
 
 const {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Label, ResponsiveContainer,

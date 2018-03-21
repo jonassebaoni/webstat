@@ -1,6 +1,6 @@
 import React from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
-import { TicketsMonthly } from '../../../imports/Collections/ticketsAggregated';
+import { TicketsMonthly } from '../../collections/ticketsAggregated';
 import Recharts from 'recharts';
 import moment from 'moment';
 import PropTypes from 'prop-types';

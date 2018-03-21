@@ -2,7 +2,7 @@ import React from 'react';
 import Recharts from 'recharts';
 import moment from 'moment';
 import { withTracker } from 'meteor/react-meteor-data';
-import { TicketsDaily } from '../../../imports/Collections/ticketsAggregated';
+import { TicketsDaily } from '../../collections/ticketsAggregated';
 import WrapperGlobalTPA from './wrapper_global_tpa';
 import PropTypes from 'prop-types';
 

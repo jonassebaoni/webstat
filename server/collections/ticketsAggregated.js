@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { ReactiveAggregate } from 'meteor/jcbernack:reactive-aggregate';
-import Tickets from '../../imports/Collections/tickets';
+import Tickets from '../../imports/collections/tickets';
 
 // Calcule le nombre de tickets total par attraction et par années
 Meteor.publish('ticketsAggregated', function (yearSelected) {
@@ -10,7 +10,7 @@ Meteor.publish('ticketsAggregated', function (yearSelected) {
         year: {
           $year: '$passingTime',
         },
-        idCompany: 1,
+        idCompany: 2,
       },
     },
     {
@@ -28,7 +28,12 @@ Meteor.publish('ticketsAggregated', function (yearSelected) {
       $sort: { sum: -1 },
     },
 
-  ], { clientCollection: 'ticketsAggregated' });
+  ], {
+    clientCollection: 'ticketsAggregated',
+    observeSelector: {
+      passingTime: { $gte: new Date() },
+    },
+  });
 });
 
 // Groupe les tickets par mois et par attraction sélectionnée
@@ -62,7 +67,12 @@ Meteor.publish('ticketsMonthly', function (companySelected, yearSelected) {
       $sort: {
         _id: 1,
       },
-    }], { clientCollection: 'ticketsMonthly' });
+    }], {
+    clientCollection: 'ticketsMonthly',
+    observeSelector: {
+      passingTime: { $gte: new Date() },
+    },
+  });
 });
 
 // Groupe les tickets par jours de la semaine et par attraction sélectionnée
@@ -83,7 +93,6 @@ Meteor.publish('ticketsWeekly', function (companySelected, yearSelected, weekSel
         idCompany: 1,
       },
     },
-
     {
       $match: {
         idCompany: companySelected, year: yearSelected, week: weekSelected,
@@ -99,7 +108,12 @@ Meteor.publish('ticketsWeekly', function (companySelected, yearSelected, weekSel
       $sort: {
         _id: 1,
       },
-    }], { clientCollection: 'ticketsWeekly' });
+    }], {
+    clientCollection: 'ticketsWeekly',
+    observeSelector: {
+      passingTime: { $gte: new Date() },
+    },
+  });
 });
 
 // Groupe les tickets par heures de la journée et par attraction sélectionnée
@@ -123,7 +137,6 @@ Meteor.publish('ticketsDaily', function (companySelected, date, range) {
         idCompany: 1,
       },
     },
-
     {
       $match: {
         idCompany: companySelected,
@@ -143,7 +156,13 @@ Meteor.publish('ticketsDaily', function (companySelected, date, range) {
       $sort: {
         _id: 1,
       },
-    }], { clientCollection: 'ticketsDaily' });
+    }], {
+    clientCollection: 'ticketsDaily',
+    observeSelector: {
+      passingTime: { $gte: new Date() },
+      tolo: 'ss',
+    },
+  });
 });
 
 // Groupe les tickets par conditions météo
@@ -154,5 +173,11 @@ Meteor.publish('ticketsWeather', function () {
         _id: '$skycode',
         sum: { $sum: 1 },
       },
-    }], { clientCollection: 'ticketsWeather' });
+    }], {
+    clientCollection: 'ticketsWeather',
+    observeSelector: {
+      passingTime: { $gte: new Date() },
+      tolo: 'ss',
+    },
+  });
 });

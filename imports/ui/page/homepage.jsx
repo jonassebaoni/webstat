@@ -6,7 +6,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import React from 'react';
 import PropTypes from 'prop-types';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Companies from '../../Collections/companies';
+import Companies from '../../collections/companies';
 import WrapperGlobalTPA from '../components/wrapper_global_tpa.jsx';
 import ChartGlobalWeather from '../components/chart_global_weather.jsx';
 import WrapperTPM from '../components/wrapper_tpm.jsx';
