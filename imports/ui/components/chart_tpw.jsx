@@ -55,10 +55,13 @@ class ChartTPW extends React.PureComponent {
 ChartTPW.propTypes = {
   ready: PropTypes.bool.isRequired,
   ticketsFiltered: PropTypes.arrayOf(PropTypes.object).isRequired,
+  selectedCompany: PropTypes.string.isRequired,
+  selectedYear: PropTypes.number.isRequired,
+  selectedWeek: PropTypes.number.isRequired,
 };
-export default withTracker(({ filter }) => {
+export default withTracker(({ selectedCompany, selectedYear, selectedWeek }) => {
   // on recupere l'id de l'entreprise
-  const handle = Meteor.subscribe('ticketsWeekly', filter, new Date().getFullYear(), moment().week());
+  const handle = Meteor.subscribe('ticketsWeekly', selectedCompany, selectedYear, selectedWeek);
   return {
     ready: handle.ready(),
     ticketsFiltered: TicketsWeekly.find().fetch(),

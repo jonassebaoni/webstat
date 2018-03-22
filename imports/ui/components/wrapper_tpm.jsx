@@ -92,7 +92,6 @@ class WrapperTPM extends React.Component {
 
 WrapperTPM.propTypes = {
   selectedYear: PropTypes.number.isRequired,
-  options: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectedCompany: PropTypes.string.isRequired,
 };
 export default WrapperTPM;

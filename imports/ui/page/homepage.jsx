@@ -13,7 +13,7 @@ import WrapperTPM from '../components/wrapper_tpm.jsx';
 import WrapperTPW from '../components/wrapper_tpw.jsx';
 import WrapperTPD from '../components/wrapper_tpd.jsx';
 import ConfigurationBar from '../components/configuration_bar.jsx';
-
+import { getWeekFromDate } from '../../utils/date';
 
 const styles = {
   row: {
@@ -54,6 +54,8 @@ class HomePage extends React.Component {
 
   render() {
     const selectedYear = this.state.selectedDate.getFullYear();
+    const selectedWeek = getWeekFromDate(this.state.selectedDate);
+
     return (
       <MuiThemeProvider>
         {this.props.ready && this.state.selectedCompany ?
@@ -81,9 +83,8 @@ class HomePage extends React.Component {
                 </Col>
                 <Col xs={4} style={styles.col4}>
                   <WrapperTPM
-                    selectedYear={selectedYear}
                     selectedCompany={this.state.selectedCompany.value}
-                    options={this.props.companies}
+                    selectedYear={selectedYear}
                   />
                 </Col>
               </Row>
@@ -91,12 +92,14 @@ class HomePage extends React.Component {
                 <Col xs={6} style={styles.col6}>
                   <WrapperTPW
                     selectedCompany={this.state.selectedCompany.value}
+                    selectedYear={selectedYear}
+                    selectedWeek={selectedWeek}
                   />
                 </Col>
                 <Col xs={6} style={styles.col6}>
                   <WrapperTPD
                     selectedCompany={this.state.selectedCompany.value}
-                    options={this.props.companies}
+                    selectedDate={this.state.selectedDate}
                   />
                 </Col>
               </Row>

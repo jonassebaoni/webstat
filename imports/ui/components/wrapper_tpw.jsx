@@ -8,7 +8,11 @@ class WrapperTPW extends React.PureComponent {
     return (
       <div className="graphContainer">
         <h2> Evolution of tickets sold over the current week </h2>
-        <ChartTPW filter={this.props.selectedCompany} />
+        <ChartTPW
+          selectedCompany={this.props.selectedCompany}
+          selectedYear={this.props.selectedYear}
+          selectedWeek={this.props.selectedWeek}
+        />
       </div>
     );
   }
@@ -16,5 +20,7 @@ class WrapperTPW extends React.PureComponent {
 
 WrapperTPW.propTypes = {
   selectedCompany: PropTypes.string.isRequired,
+  selectedYear: PropTypes.number.isRequired,
+  selectedWeek: PropTypes.number.isRequired,
 };
 export default WrapperTPW;

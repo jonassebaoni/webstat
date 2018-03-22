@@ -1,6 +1,4 @@
 import React from 'react';
-import DatePicker from 'material-ui/DatePicker';
-import DateRange from 'material-ui-icons/DateRange';
 import PropTypes from 'prop-types';
 import Slider from 'rc-slider';
 import ChartTPD from './chart_tpd.jsx';
@@ -9,33 +7,13 @@ const { createSliderWithTooltip } = Slider;
 const Range = createSliderWithTooltip(Slider.Range);
 
 
-const styles = {
-  dataRangeIcon: {
-    width: 30,
-    height: 30,
-    marginTop: 8,
-  },
-  datePicker: {
-    marginLeft: 10,
-    marginRight: 10,
-  },
-};
-
 class WrapperTPD extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      controlledDate: new Date(),
       rangeValue: [6, 20],
     };
-    this.handleDateSelected = this.handleDateSelected.bind(this);
     this.handleRangeSelected = this.handleRangeSelected.bind(this);
-  }
-
-  handleDateSelected(event, date) {
-    this.setState({
-      controlledDate: date,
-    });
   }
 
   handleRangeSelected(value) {
@@ -47,13 +25,6 @@ class WrapperTPD extends React.Component {
       <div className="graphContainer">
         <h2> Evolution of tickets sold over the day </h2>
         <div className="graphInputContainer">
-          <DateRange style={styles.dataRangeIcon} />
-          <DatePicker
-            hintText="Date Input"
-            value={this.state.controlledDate}
-            onChange={this.handleDateSelected}
-            style={styles.datePicker}
-          />
           <Range
             className="slider"
             defaultValue={this.state.rangeValue}
@@ -67,7 +38,7 @@ class WrapperTPD extends React.Component {
         <div className="graph">
           <ChartTPD
             filter={this.props.selectedCompany}
-            date={this.state.controlledDate}
+            date={this.props.selectedDate}
             range={this.state.rangeValue}
           />
         </div>
@@ -78,5 +49,6 @@ class WrapperTPD extends React.Component {
 
 WrapperTPD.propTypes = {
   selectedCompany: PropTypes.string.isRequired,
+  selectedDate: PropTypes.instanceOf(Date).isRequired,
 };
 export default WrapperTPD;
