@@ -13,7 +13,8 @@ import WrapperTPM from '../components/wrapper_tpm.jsx';
 import WrapperTPW from '../components/wrapper_tpw.jsx';
 import WrapperTPD from '../components/wrapper_tpd.jsx';
 import ConfigurationBar from '../components/configuration_bar.jsx';
-import { getWeekFromDate } from '../../utils/date';
+import { getWeekOfYear } from '../../utils/date';
+import PredictionZone from '../components/prediction_zone.jsx';
 
 const styles = {
   row: {
@@ -54,7 +55,7 @@ class HomePage extends React.Component {
 
   render() {
     const selectedYear = this.state.selectedDate.getFullYear();
-    const selectedWeek = getWeekFromDate(this.state.selectedDate);
+    const selectedWeek = getWeekOfYear(this.state.selectedDate);
 
     return (
       <MuiThemeProvider>
@@ -79,7 +80,7 @@ class HomePage extends React.Component {
                   />
                 </Col>
                 <Col xs={4} style={styles.col4}>
-                  <ChartGlobalWeather />
+                  <PredictionZone />
                 </Col>
                 <Col xs={4} style={styles.col4}>
                   <WrapperTPM
@@ -89,14 +90,17 @@ class HomePage extends React.Component {
                 </Col>
               </Row>
               <Row>
-                <Col xs={6} style={styles.col6}>
+                <Col xs={4} style={styles.col4}>
                   <WrapperTPW
                     selectedCompany={this.state.selectedCompany.value}
                     selectedYear={selectedYear}
                     selectedWeek={selectedWeek}
                   />
                 </Col>
-                <Col xs={6} style={styles.col6}>
+                <Col xs={4} style={styles.col4}>
+                  <ChartGlobalWeather />
+                </Col>
+                <Col xs={4} style={styles.col4}>
                   <WrapperTPD
                     selectedCompany={this.state.selectedCompany.value}
                     selectedDate={this.state.selectedDate}

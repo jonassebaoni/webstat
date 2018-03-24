@@ -1,5 +1,4 @@
 import React from 'react';
-import Select from 'react-select';
 import PropTypes from 'prop-types';
 import ChartGlobalTPA from './chart_global_tpa.jsx';
 
