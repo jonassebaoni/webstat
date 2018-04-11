@@ -39,25 +39,6 @@ class WrapperTPM extends React.Component {
   }
 
   render() {
-    const { isBar } = this.state;
-    let chart = null;
-
-    if (isBar) {
-      chart = (
-        <ChartBarTPM
-          filter={this.props.selectedCompany}
-          yearSelected={this.props.selectedYear}
-        />
-      );
-    } else {
-      chart = (
-        <ChartLineTPM
-          filter={this.props.selectedCompany}
-          yearSelected={this.props.selectedYear}
-        />
-      );
-    }
-
     return (
       <div className="graphContainer">
         <h2> Evolution of tickets sold over the year </h2>
@@ -83,7 +64,15 @@ class WrapperTPM extends React.Component {
         </div>
 
         <div className="graph">
-          {chart}
+          {this.state.isBar === true ?
+            <ChartBarTPM
+              tickets={this.props.tickets}
+            />
+            :
+            <ChartLineTPM
+              tickets={this.props.tickets}
+            />
+          }
         </div>
       </div>
     );
@@ -91,7 +80,6 @@ class WrapperTPM extends React.Component {
 }
 
 WrapperTPM.propTypes = {
-  selectedYear: PropTypes.number.isRequired,
-  selectedCompany: PropTypes.string.isRequired,
+  tickets: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 export default WrapperTPM;

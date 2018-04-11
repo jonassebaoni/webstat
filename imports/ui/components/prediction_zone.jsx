@@ -4,6 +4,7 @@ import DatePicker from 'material-ui/DatePicker';
 import DateRange from 'material-ui-icons/DateRange';
 import axios from 'axios';
 import { getDayOfYear } from '../../utils/date';
+import ENV from '../../environment';
 
 
 const styles = {
@@ -42,6 +43,10 @@ class PredictionZone extends React.Component {
       value: 10,
     },
     {
+      label: 'Cloudy',
+      value: 26,
+    },
+    {
       label: 'Sunny',
       value: 32,
     },
@@ -75,7 +80,7 @@ class PredictionZone extends React.Component {
 
         axios({
           method: 'get',
-          url: `http://localhost:4000/api/predict/sales?day=${dayOfYear}&weather=${this.state.selectedWeather.value}`,
+          url: `${ENV.API_PREDICTION_URL}/api/predict/sales?day=${dayOfYear}&weather=${this.state.selectedWeather.value}`,
         })
           .then((response) => {
             const prediction = response.data;

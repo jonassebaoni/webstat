@@ -1,9 +1,8 @@
 import React from 'react';
-import { withTracker } from 'meteor/react-meteor-data';
-import { TicketsWeekly } from '../../collections/ticketsAggregated';
 import Recharts from 'recharts';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+
 
 const {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Label, ResponsiveContainer,
@@ -20,19 +19,17 @@ const styles = {
 
 class ChartTPW extends React.PureComponent {
   render() {
-    if (!this.props.ready) {
-      return null;
-    }
     // si pas de ticket dans la base
-    if (this.props.ticketsFiltered === []) {
+    if (this.props.tickets.length === 0) {
       return (
-        <div>pas de ticket disponible</div>
+        <div>Pas de vente pour cette période</div>
       );
     }
+
     return (
       <ResponsiveContainer>
         <BarChart
-          data={this.props.ticketsFiltered}
+          data={this.props.tickets}
           margin={{
             top: 5, right: 20, left: 10, bottom: 5,
           }}
@@ -53,18 +50,6 @@ class ChartTPW extends React.PureComponent {
 }
 
 ChartTPW.propTypes = {
-  ready: PropTypes.bool.isRequired,
-  ticketsFiltered: PropTypes.arrayOf(PropTypes.object).isRequired,
-  selectedCompany: PropTypes.string.isRequired,
-  selectedYear: PropTypes.number.isRequired,
-  selectedWeek: PropTypes.number.isRequired,
+  tickets: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
-export default withTracker(({ selectedCompany, selectedYear, selectedWeek }) => {
-  // on recupere l'id de l'entreprise
-  const handle = Meteor.subscribe('ticketsWeekly', selectedCompany, selectedYear, selectedWeek);
-  return {
-    ready: handle.ready(),
-    ticketsFiltered: TicketsWeekly.find().fetch(),
-
-  };
-})(ChartTPW);
+export default ChartTPW;

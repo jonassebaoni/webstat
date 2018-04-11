@@ -1,10 +1,10 @@
 import { Restivus } from 'meteor/nimble:restivus';
 import Tickets from '../imports/collections/tickets';
+import { getWeekOfYear } from '../imports/utils/date';
 
 
 // Global API configuration
 const Api = new Restivus({
-  version: 'v1',
   useDefaultAuth: false,
   prettyJson: true,
 });
@@ -29,7 +29,7 @@ Api.swagger = {
       _id: 'string',
       number: 'number',
       idPerson: 0,
-      idCompany: 'string',
+      idCompany: 'string',// Api.addCollection(TicketsDaily);
       idWaitList: 'string',
       passingTime: 'date',
       passed: 'boolean',
@@ -88,8 +88,6 @@ Api.addCollection(Tickets, {
   },
 });
 
-// Api.addCollection(TicketsDaily);
-
 Api.addRoute('ticketsInfo', {
   get: () => {
     const pipeline = [
@@ -111,6 +109,222 @@ Api.addRoute('ticketsInfo', {
       },
       {
         $sort: { _id: 1 },
+      },
+    ];
+
+    const result = Tickets.aggregate(pipeline);
+
+    return {
+      status: 'success',
+      data: result,
+    };
+  },
+});
+
+// Calcule le nombre de tickets total par attraction et par années
+Api.addRoute('ticketsAggregated/:year', {
+  get: function () {
+    const selectedYear = parseInt(this.urlParams.year, 10);
+
+    const pipeline = [
+      {
+        $project: {
+          year: {
+            $year: '$passingTime',
+          },
+          idCompany: 2,
+        },
+      },
+      {
+        $match: {
+          year: selectedYear,
+        },
+      },
+      {
+        $group: {
+          _id: '$idCompany',
+          sum: { $sum: 1 },
+        },
+      },
+      {
+        $sort: { sum: -1 },
+      },
+    ];
+
+    const result = Tickets.aggregate(pipeline);
+
+    return {
+      status: 'success',
+      data: result,
+    };
+  },
+});
+
+Api.addRoute('ticketsMonthly/:company', {
+  get: function () {
+    const selectedCompany = this.urlParams.company;
+    const selectedYear = this.queryParams.year ?
+      parseInt(this.queryParams.year, 10) : Date.now().getFullYear();
+
+    const pipeline = [
+      {
+        $project: {
+          year: {
+            $year: '$passingTime',
+          },
+          month: {
+            $month: '$passingTime',
+          },
+          idCompany: 1,
+        },
+      },
+      {
+        $match: {
+          idCompany: selectedCompany,
+          year: selectedYear,
+        },
+      },
+      {
+        $group: {
+          _id: '$month',
+          sum: { $sum: 1 },
+        },
+      },
+      {
+        $sort: {
+          _id: 1,
+        },
+      },
+    ];
+
+    const result = Tickets.aggregate(pipeline);
+
+    return {
+      status: 'success',
+      data: result,
+    };
+  },
+});
+
+// Groupe les tickets par jours de la semaine et par attraction sélectionnée
+Api.addRoute('ticketsWeekly/:company', {
+  get: function () {
+    const now = new Date();
+
+    const selectedCompany = this.urlParams.company;
+    const selectedYear = this.queryParams.year ?
+      parseInt(this.queryParams.year, 10) : now.getFullYear();
+    const selectedWeek = this.queryParams.week ?
+      parseInt(this.queryParams.week, 10) : getWeekOfYear(now);
+
+    const pipeline = [
+      {
+        $project: {
+          year: {
+            $year: '$passingTime',
+          },
+          week: {
+            $week: '$passingTime',
+          },
+          day: {
+            $dayOfWeek: '$passingTime',
+          },
+          passingTime: 1,
+          idCompany: 1,
+        },
+      },
+      {
+        $match: {
+          idCompany: selectedCompany, year: selectedYear, week: selectedWeek,
+        },
+      },
+      {
+        $group: {
+          _id: '$day',
+          sum: { $sum: 1 },
+        },
+      },
+      {
+        $sort: {
+          _id: 1,
+        },
+      },
+    ];
+
+    const result = Tickets.aggregate(pipeline);
+
+    return {
+      status: 'success',
+      data: result,
+    };
+  },
+});
+
+// Groupe les tickets par jours de la semaine et par attraction sélectionnée
+Api.addRoute('ticketsDaily/:company', {
+  get: function () {
+    const selectedCompany = this.urlParams.company;
+    const selectedDate = new Date(this.queryParams.date || undefined);
+
+    const pipeline = [
+      {
+        $project: {
+          year: {
+            $year: '$passingTime',
+          },
+          month: {
+            $month: '$passingTime',
+          },
+          day: {
+            $dayOfMonth: '$passingTime',
+          },
+          hours: {
+            $hour: '$passingTime',
+          },
+          passingTime: 1,
+          idCompany: 1,
+        },
+      },
+      {
+        $match: {
+          idCompany: selectedCompany,
+          year: selectedDate.getFullYear(),
+          month: selectedDate.getMonth() + 1,
+          day: selectedDate.getDay(),
+          hours: { $gte: 0, $lte: 24 },
+        },
+      },
+      {
+        $group: {
+          _id: '$hours',
+          sum: { $sum: 1 },
+        },
+      },
+      {
+        $sort: {
+          _id: 1,
+        },
+      },
+    ];
+
+    const result = Tickets.aggregate(pipeline);
+
+    return {
+      status: 'success',
+      data: result,
+    };
+  },
+});
+
+// Groupe les tickets par conditions météo
+Api.addRoute('ticketsWeather', {
+  get: () => {
+    const pipeline = [
+      {
+        $group: {
+          _id: '$skycode',
+          sum: { $sum: 1 },
+        },
       },
     ];
 

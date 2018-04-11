@@ -28,7 +28,7 @@ class SalesPredictor:
             self._load_model()
         except IOError:
             # Si une erreur est survenue lors du chargement on entraine le modèle
-            self.train_predictor()
+            self.train_predictor(show_train_result=True)
 
     def train_predictor(self, show_train_result=False):
         # Récupération des données

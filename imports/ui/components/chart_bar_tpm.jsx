@@ -1,9 +1,8 @@
 import React from 'react';
-import { withTracker } from 'meteor/react-meteor-data';
-import { TicketsMonthly } from '../../collections/ticketsAggregated';
 import Recharts from 'recharts';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+
 
 const {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Label, ResponsiveContainer,
@@ -19,19 +18,16 @@ const styles = {
 
 class ChartBarTPM extends React.PureComponent {
   render() {
-    if (!this.props.ready) {
-      return null;
-    }
     // si pas de ticket dans la base
-    if (this.props.ticketsFiltered === []) {
+    if (this.props.tickets.length === 0) {
       return (
-        <div>pas de ticket disponible</div>
+        <div>Pas de vente pour cette période</div>
       );
     }
     return (
       <ResponsiveContainer>
         <BarChart
-          data={this.props.ticketsFiltered}
+          data={this.props.tickets}
           margin={{
             top: 5, right: 20, left: 10, bottom: 5,
           }}
@@ -52,15 +48,6 @@ class ChartBarTPM extends React.PureComponent {
 }
 
 ChartBarTPM.propTypes = {
-  ready: PropTypes.bool.isRequired,
-  ticketsFiltered: PropTypes.arrayOf(PropTypes.object).isRequired,
+  tickets: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
-export default withTracker(({ filter, yearSelected }) => {
-  // on recupere l'id de l'entreprise
-  const handle = Meteor.subscribe('ticketsMonthly', filter, yearSelected);
-  return {
-    ready: handle.ready(),
-    ticketsFiltered: TicketsMonthly.find().fetch(),
-
-  };
-})(ChartBarTPM);
+export default ChartBarTPM;

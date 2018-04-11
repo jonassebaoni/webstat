@@ -37,8 +37,7 @@ class WrapperTPD extends React.Component {
 
         <div className="graph">
           <ChartTPD
-            filter={this.props.selectedCompany}
-            date={this.props.selectedDate}
+            tickets={this.props.tickets}
             range={this.state.rangeValue}
           />
         </div>
@@ -48,7 +47,6 @@ class WrapperTPD extends React.Component {
 }
 
 WrapperTPD.propTypes = {
-  selectedCompany: PropTypes.string.isRequired,
-  selectedDate: PropTypes.instanceOf(Date).isRequired,
+  tickets: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 export default WrapperTPD;

@@ -1,6 +1,5 @@
 import React from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
-import { TicketsMonthly } from '../../collections/ticketsAggregated';
 import Recharts from 'recharts';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -19,20 +18,20 @@ const styles = {
 
 class ChartLineTPM extends React.PureComponent {
   render() {
-    if (!this.props.ready) {
-      return null;
-    }
     // si pas de ticket dans la base
-    if (this.props.ticketsFiltered === []) {
+    if (this.props.tickets.length === 0) {
       return (
-        <div>pas de ticket disponible</div>
+        <div>Pas de vente pour cette période</div>
       );
     }
+
     return (
       <ResponsiveContainer>
         <LineChart
-          data={this.props.ticketsFiltered}
-          margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
+          data={this.props.tickets}
+          margin={{
+            top: 5, right: 20, left: 10, bottom: 5,
+          }}
         >
           <XAxis dataKey="_id" name="months" tickFormatter={tick => moment(tick, 'MM').format('MMMM')} >
             <Label value="months" position="bottom" style={styles.label} />
@@ -49,19 +48,7 @@ class ChartLineTPM extends React.PureComponent {
   }
 }
 
-ChartLineTPM.defaultProps = {
-  ready: false,
-};
 ChartLineTPM.propTypes = {
-  ready: PropTypes.bool,
-  ticketsFiltered: PropTypes.arrayOf(PropTypes.object).isRequired,
+  tickets: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
-export default withTracker(({ filter, yearSelected }) => {
-  // on recupere l'id de l'entreprise
-  const handle = Meteor.subscribe('ticketsMonthly', filter, yearSelected);
-  return {
-    ready: handle.ready(),
-    ticketsFiltered: TicketsMonthly.find().fetch(),
-
-  };
-})(ChartLineTPM);
+export default ChartLineTPM;

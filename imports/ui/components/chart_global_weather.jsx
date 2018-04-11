@@ -1,8 +1,9 @@
 import React from 'react';
 import Recharts from 'recharts';
-import PropTypes from 'prop-types';
-import { withTracker } from 'meteor/react-meteor-data';
-import { TicketsWeather } from '../../collections/ticketsAggregated';
+import makeCancelable from 'makecancelable';
+import axios from 'axios';
+import ENV from '../../environment';
+
 
 const {
   PieChart, Pie, Tooltip, ResponsiveContainer, Cell, LabelList,
@@ -35,6 +36,31 @@ class ChartGlobalWeather extends React.Component {
   constructor(props) {
     super(props);
     this.getSkyName = this.getSkyName.bind(this);
+    this.getTickets = this.getTickets.bind(this);
+
+    this.state = {
+      ready: false,
+      tickets: [],
+    };
+  }
+
+  componentWillMount() {
+    this.cancelFetch = makeCancelable(
+      this.getTickets(),
+      res => this.setState({ ready: true, tickets: res.data.data }),
+      error => console.error(error),
+    );
+  }
+
+  componentWillUnmount() {
+    this.cancelFetch();
+  }
+
+  getTickets() {
+    return axios({
+      method: 'get',
+      url: `${ENV.API_URL}/api/ticketsWeather`,
+    });
   }
 
   // Méthode qui retourne le nom (condition météo) associé au skyCode
@@ -108,10 +134,10 @@ class ChartGlobalWeather extends React.Component {
     return (
       <div className="graphContainer">
         <h2> Affluence according to the weather </h2>
-        {!this.props.ready ?
+        {this.state.ready === false ?
           null
           :
-          this.props.ticketsFiltered === [] ?
+          this.state.tickets === [] ?
             // Si pas de ticket dans la base
             <div>Pas de ticket disponible</div>
             :
@@ -119,7 +145,7 @@ class ChartGlobalWeather extends React.Component {
               <ResponsiveContainer>
                 <PieChart>
                   <Pie
-                    data={this.props.ticketsFiltered}
+                    data={this.state.tickets}
                     nameKey="_id"
                     dataKey="sum"
                     fill="#82ca9d"
@@ -127,7 +153,7 @@ class ChartGlobalWeather extends React.Component {
                     label={renderCustomizedLabel}
                   >
                     {
-                      this.props.ticketsFiltered
+                      this.state.tickets
                         .map((entry, index) =>
                           <Cell key={index} fill={COLORS[index % COLORS.length]} />)
                     }
@@ -143,17 +169,4 @@ class ChartGlobalWeather extends React.Component {
   }
 }
 
-ChartGlobalWeather.defaultProps = {
-  ready: false,
-};
-ChartGlobalWeather.propTypes = {
-  ready: PropTypes.bool,
-  ticketsFiltered: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
-export default withTracker(() => {
-  const handle = Meteor.subscribe('ticketsWeather');
-  return {
-    ready: handle.ready(),
-    ticketsFiltered: TicketsWeather.find({}).fetch(),
-  };
-})(ChartGlobalWeather);
+export default ChartGlobalWeather;
